@@ -1,10 +1,11 @@
-import React from "react";
-import Message from "./Message";
+import ListGroup from "./assets/components/ListGroup";
 
 const App = () => {
+	let items = ["One", "Two", "Three", "Four", "Five"];
+
 	return (
 		<div>
-			<Message />
+			<ListGroup name="List of Items" items={items} />
 		</div>
 	);
 };
