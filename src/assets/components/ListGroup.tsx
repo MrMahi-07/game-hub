@@ -3,10 +3,10 @@ import { MouseEvent, useState } from "react";
 interface Props {
 	name: string;
 	items: string[];
+	onSelectedItem: (item: string) => void;
 }
 
-const ListGroup = ({ name, items }: Props) => {
-	// let items = ["One", "Two", "Three", "Four"];
+const ListGroup = ({ name, items, onSelectedItem }: Props) => {
 	const [selectedIndex, setSelectedIndex] = useState(-1);
 
 	const getMessages = () => {
@@ -15,24 +15,13 @@ const ListGroup = ({ name, items }: Props) => {
 		);
 	};
 
-	const handleClick = (idx: number) => {
+	const handleClick = (item: string, idx: number) => {
 		setSelectedIndex(idx);
-		console.log(selectedIndex);
+		onSelectedItem(item);
 	};
 
 	return (
 		<>
-			<h3>List Group Static</h3>
-
-			<ul className="list-group ">
-				<li className="list-group-item ">An item</li>
-				<li className="list-group-item list-group-item-dark">
-					A second item
-				</li>
-				<li className="list-group-item">A third item</li>
-				<li className="list-group-item">A fourth item</li>
-				<li className="list-group-item">And a fifth one</li>
-			</ul>
 			<h3 className="mt-4">{name}</h3>
 			{getMessages()}
 			<ul className="list-group">
@@ -43,13 +32,12 @@ const ListGroup = ({ name, items }: Props) => {
 							idx == selectedIndex && "active"
 						}`}
 						key={item}
-						onClick={() => handleClick(idx)}
+						onClick={() => handleClick(item, idx)}
 					>
 						{item}
 					</li>
 				))}
 			</ul>
-			<button className="btn btn-primary mt-3">Check out</button>
 		</>
 	);
 };
