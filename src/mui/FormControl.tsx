@@ -28,7 +28,7 @@ const FormControl = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<Form>({ resolver: zodResolver(schema) });
+	} = useForm<FormData>({ resolver: zodResolver(schema) });
 
 	return (
 		<form
