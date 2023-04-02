@@ -1,13 +1,12 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
-import { Button, IconButton, Stack, TextField } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import BasicAlerts from "./mui/BasicAlerts";
+import Container from "@mui/material/Container";
+import ButtonAppBar from "./mui/ButtonAppBar";
+import FormControl from "./mui/FormControl";
 
 function App() {
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkMode, setDarkMode] = useState(true);
 
 	const darkTheme = createTheme({
 		palette: {
@@ -18,21 +17,11 @@ function App() {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			<IconButton
-				aria-label="delete"
-				onClick={() => setDarkMode(!darkMode)}
-			>
-				{darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-			</IconButton>
-			<BasicAlerts />
-			<Stack direction={"row"} spacing={2} margin={2}>
-				<TextField
-					id="outlined-basic"
-					label="Name"
-					variant="outlined"
-				/>
-				<Button variant="outlined">Outlined</Button>
-			</Stack>
+			<ButtonAppBar status={darkMode} onToggle={() => setDarkMode(!darkMode)} />
+
+			<Container>
+				<FormControl />
+			</Container>
 		</ThemeProvider>
 	);
 }
