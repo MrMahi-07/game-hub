@@ -1,7 +1,21 @@
-import { TextField, Button, FormHelperText } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface FormData {
+const schema = z.object({
+	name: z
+		.string({ required_error: "Name field is required." })
+		.min(3, { message: "Name field must be at least 3 characters." }),
+	email: z.string({ required_error: "Email field is required." }).email(),
+	age: z
+		.number({ invalid_type_error: "Age field is required." })
+		.min(18, { message: "Age must be at least 18." }),
+});
+
+type FormData = z.infer<typeof schema>;
+
+interface Form {
 	name: string;
 	age: number;
 	email: string;
@@ -14,7 +28,7 @@ const FormControl = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<FormData>();
+	} = useForm<Form>({ resolver: zodResolver(schema) });
 
 	return (
 		<form
@@ -26,13 +40,7 @@ const FormControl = () => {
 				label="Name"
 				variant="outlined"
 				fullWidth
-				helperText={
-					errors.name?.type === "required"
-						? "Name field Required"
-						: errors.name?.type === "minLength"
-						? "Name field most be at least 3 characters."
-						: null
-				}
+				helperText={errors.name?.message}
 				sx={sxForm}
 				error={errors.name && true}
 				{...register("name", { required: true, minLength: 3 })}
@@ -43,15 +51,9 @@ const FormControl = () => {
 				variant="outlined"
 				fullWidth
 				sx={sxForm}
-				{...register("email", { pattern: /\w+@\w+\.\w{2,}/g })}
+				{...register("email")}
 				error={errors.email && true}
-				helperText={
-					errors.email?.type === "required"
-						? "Email field Required"
-						: errors.email?.type === "pattern"
-						? "Invalid Email Field."
-						: null
-				}
+				helperText={errors.email?.message}
 			/>
 			<TextField
 				label="Age"
@@ -59,15 +61,9 @@ const FormControl = () => {
 				fullWidth
 				type="number"
 				sx={sxForm}
-				{...register("age", { valueAsNumber: true, min: 18 })}
+				{...register("age", { valueAsNumber: true })}
 				error={errors.age && true}
-				helperText={
-					errors.age?.type === "required"
-						? "Age field Required"
-						: errors.age?.type === "min"
-						? "Age Field must be at least 18."
-						: null
-				}
+				helperText={errors.age?.message}
 			/>
 			<Button variant="contained" type="submit">
 				Submit
