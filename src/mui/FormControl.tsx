@@ -1,57 +1,73 @@
-import { TextField, Button } from "@mui/material";
-import { FormEvent, useRef } from "react";
+import { TextField, Button, FormHelperText } from "@mui/material";
 import { useForm } from "react-hook-form";
+
+interface FormData {
+	name: string;
+	age: number;
+	email: string;
+}
 
 const FormControl = () => {
 	let sxForm = { mb: 3 };
-	const nameRef = useRef<HTMLInputElement>(null);
-	const emailRef = useRef<HTMLInputElement>(null);
-	const ageRef = useRef<HTMLInputElement>(null);
 
-	const person = { name: "", age: 0 };
-
-	const { register } = useForm();
-	console.log(register);
-
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		if (nameRef.current && ageRef.current) {
-			person.name = nameRef.current.value;
-			person.age = parseInt(ageRef.current.value);
-		}
-		console.log(person);
-	};
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<FormData>();
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			onSubmit={handleSubmit((data) => {
+				console.log(data);
+			})}
+		>
 			<TextField
-				id="outlined-basic"
 				label="Name"
 				variant="outlined"
 				fullWidth
-				helperText="Please select your currency"
+				helperText={
+					errors.name?.type === "required"
+						? "Name field Required"
+						: errors.name?.type === "minLength"
+						? "Name field most be at least 3 characters."
+						: null
+				}
 				sx={sxForm}
-				inputRef={nameRef}
+				error={errors.name && true}
+				{...register("name", { required: true, minLength: 3 })}
 			/>
+
 			<TextField
-				// id="outlined-basic"
 				label="Email"
 				variant="outlined"
 				fullWidth
-				type="email"
-				helperText="Please select your currency"
 				sx={sxForm}
-				inputRef={emailRef}
+				{...register("email", { pattern: /\w+@\w+\.\w{2,}/g })}
+				error={errors.email && true}
+				helperText={
+					errors.email?.type === "required"
+						? "Email field Required"
+						: errors.email?.type === "pattern"
+						? "Invalid Email Field."
+						: null
+				}
 			/>
 			<TextField
-				// id="outlined-basic"
 				label="Age"
 				variant="outlined"
 				fullWidth
 				type="number"
-				helperText="Please select your currency"
 				sx={sxForm}
-				inputRef={ageRef}
+				{...register("age", { valueAsNumber: true, min: 18 })}
+				error={errors.age && true}
+				helperText={
+					errors.age?.type === "required"
+						? "Age field Required"
+						: errors.age?.type === "min"
+						? "Age Field must be at least 18."
+						: null
+				}
 			/>
 			<Button variant="contained" type="submit">
 				Submit
