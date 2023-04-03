@@ -11,7 +11,7 @@ import { Props } from "./Theme";
 
 export default function ButtonAppBar({ onToggle, status }: Props) {
 	return (
-		<Box sx={{ flexGrow: 1, mb: 3 }} margin={"dense"}>
+		<Box sx={{ flexGrow: 1, mb: 0 }}>
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
@@ -23,11 +23,7 @@ export default function ButtonAppBar({ onToggle, status }: Props) {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography
-						variant="h6"
-						component="div"
-						sx={{ flexGrow: 1 }}
-					>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						News
 					</Typography>
 					<Theme status={status} onToggle={onToggle}></Theme>
