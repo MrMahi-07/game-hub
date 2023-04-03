@@ -1,38 +1,22 @@
 import {
 	Button,
+	CircularProgress,
 	List,
 	ListItemButton,
 	ListItemText,
 	Typography,
 } from "@mui/material";
-import { CanceledError } from "axios";
-import { useState, useEffect } from "react";
 import userService, { User } from "../services/user-service";
+import useUsers from "../hooks/useUsers";
 
 const HTTPRequest = () => {
-	const [users, setUsers] = useState<User[]>([]);
-	const [error, setError] = useState("");
+	const { users, error, isLoading, setUsers, setError } = useUsers();
 
-	useEffect(() => {
-		const { request, close } = userService.getAllUsers();
-		request
-			.then((res) => {
-				console.log(res);
-				// setUsers(res.data);
-			})
-			.catch((e) => {
-				if (e instanceof CanceledError) return;
-				setError(e.message);
-			});
-
-		return close();
-	}, []);
-
-	function deleteUser(id: number) {
+	function deleteUser(user: User) {
 		const originalUsers = [...users];
-		setUsers(users.filter((user) => id !== user.id));
+		setUsers(users.filter((u) => u.id !== user.id));
 
-		userService.deleteUser(id).catch((e) => {
+		userService.delete<User>(user).catch((e) => {
 			setUsers(originalUsers);
 			setError(e.message);
 		});
@@ -45,7 +29,7 @@ const HTTPRequest = () => {
 
 		setUsers(users.map((u) => (user.id == u.id ? userUpdate : u)));
 
-		userService.updateUser(user).catch((e) => {
+		userService.update(user).catch((e) => {
 			setError(e.message);
 			setUsers(originalUsers);
 		});
@@ -58,13 +42,22 @@ const HTTPRequest = () => {
 		setUsers([newUser, ...users]);
 
 		userService
-			.addUser(newUser)
+			.add(newUser)
 			.then(({ data }) => setUsers([data, ...users]))
 			.catch((e) => {
 				setError(e.message);
 				setUsers(originalUsers);
 			});
 	}
+
+	if (isLoading)
+		return (
+			<CircularProgress
+				sx={{
+					"--CircularProgress-size": "83px",
+				}}
+			/>
+		);
 
 	return (
 		<>
@@ -87,7 +80,7 @@ const HTTPRequest = () => {
 						</Button>
 						<Button
 							color="error"
-							onClick={() => deleteUser(user.id)}
+							onClick={() => deleteUser(user)}
 							variant="outlined"
 						>
 							Delete
