@@ -13,10 +13,16 @@ import { Icon, Stack } from "@mui/material";
 import { Platform } from "../services/rawg-http";
 
 interface Props {
-	platform: Platform[];
+	platform: { platform: Platform }[];
 }
 //
 const Platforms = ({ platform }: Props) => {
+	// const [
+	// 	{
+	// 		platform: { id },
+	// 	},
+	// ] = platform;
+	// console.log(id);
 	const platforms = [
 		{ id: 1, name: "PC", slug: "pc", icon: <SiWindows /> },
 		{
@@ -36,7 +42,7 @@ const Platforms = ({ platform }: Props) => {
 	return (
 		<Stack direction={"row"} spacing={1}>
 			{platforms
-				.filter((p) => platform.some((x) => x.id == p.id))
+				.filter((p) => platform.some(({ platform: { id } }) => id == p.id))
 				.map((p) => (
 					<span key={p.id}>{p.icon}</span>
 				))}

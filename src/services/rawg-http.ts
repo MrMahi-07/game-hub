@@ -11,7 +11,9 @@ export interface Game {
 	name: string;
 	slug: string;
 	rating: number;
-	parent_platforms: Platform[];
+	parent_platforms: { platform: Platform }[];
+	background_image: string;
+	rating_top: number;
 }
 
 export interface FetchGameResponse {

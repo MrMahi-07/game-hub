@@ -27,15 +27,12 @@ interface Props {
 }
 
 const GameCard = ({ game }: Props) => {
-	// console.log(games);
 	return (
-		<Card sx={{ maxWidth: 345, borderRadius: 4 }}>
+		<Card sx={{ borderRadius: 4 }}>
 			<Box
 				component="img"
-				src={
-					"https://media.rawg.io/media/crop/600/400/games/fb5/fb5e0fdb1f6bb0e8b5da5d08bb83a5fc.jpg"
-				}
-				alt="Game Name"
+				src={game.background_image}
+				alt={game.name}
 				sx={{
 					objectFit: "cover",
 					width: "100%",
@@ -53,8 +50,8 @@ const GameCard = ({ game }: Props) => {
 					sx={{ fontWeight: "bold", pt: 2 }}
 					component="div"
 				>
-					Lizard
-					<Recommended />
+					{game.name}
+					<Recommended rating={game.rating_top} />
 				</Typography>
 			</CardContent>
 			<CardActions sx={{ p: 2 }}>
