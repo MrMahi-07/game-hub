@@ -6,12 +6,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Theme from "./Theme";
-import { Props } from "./Theme";
+import Theme from "../react-app/Theme";
+import { Props } from "../react-app/Theme";
 
 export default function ButtonAppBar({ onToggle, status }: Props) {
 	return (
-		<Box sx={{ flexGrow: 1, mb: 0 }}>
+		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
@@ -19,7 +19,6 @@ export default function ButtonAppBar({ onToggle, status }: Props) {
 						edge="start"
 						color="inherit"
 						aria-label="menu"
-						sx={{ mr: 2 }}
 					>
 						<MenuIcon />
 					</IconButton>
