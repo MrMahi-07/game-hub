@@ -1,28 +1,33 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Theme from "./Theme";
-import { Props } from "./Theme";
+import ModeToggler from "./ModeToggler";
+import Input from "@mui/joy/Input";
+import SearchIcon from "@mui/icons-material/Search";
+import { Avatar } from "@mui/material";
+import logo from "../assets/logo.svg";
 
-export default function NavBar({ onToggle, status }: Props) {
+export default function NavBar() {
 	return (
 		<Box sx={{ flexGrow: 1, backgroundColor: "none" }}>
-			{/* <AppBar position="static" sx={{ backgroundColor: "secondary" }}> */}
 			<Toolbar>
-				<IconButton size="large" edge="start" color="inherit" aria-label="menu">
-					<MenuIcon />
-				</IconButton>
-				<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-					News
-				</Typography>
-				<Theme status={status} onToggle={onToggle}></Theme>
+				<Avatar
+					alt={logo}
+					src={logo}
+					sx={{ display: "inline-flex", width: 150, ml: 1, height: 50 }}
+				/>
+
+				<Input
+					sx={{ mx: 1, "--Input-minHeight": "46px", "--Input-radius": "50px" }}
+					fullWidth
+					placeholder="Search..."
+					startDecorator={<SearchIcon />}
+				/>
+
+				<ModeToggler />
 			</Toolbar>
-			{/* </AppBar> */}
 		</Box>
 	);
 }

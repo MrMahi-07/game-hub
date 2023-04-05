@@ -1,14 +1,14 @@
-import { Chip } from "@mui/material";
-import React from "react";
+import Chip from "@mui/joy/Chip";
 
-const RatingChip = () => {
+interface Props {
+	critic: number;
+}
+
+const RatingChip = ({ critic }: Props) => {
 	return (
-		<Chip
-			label="98"
-			color="success"
-			variant="outlined"
-			sx={{ borderRadius: 2, fontSize: 15 }}
-		/>
+		<Chip color="success" size="md" variant="soft" sx={{ borderRadius: 5 }}>
+			{critic}
+		</Chip>
 	);
 };
 

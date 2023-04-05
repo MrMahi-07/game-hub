@@ -1,26 +1,5 @@
 import rawgApi from "./rawg-api";
 
-export interface Platform {
-	id: number;
-	name: string;
-	slug: string;
-}
-
-export interface Game {
-	id: number;
-	name: string;
-	slug: string;
-	rating: number;
-	parent_platforms: { platform: Platform }[];
-	background_image: string;
-	rating_top: number;
-}
-
-export interface FetchGameResponse {
-	count: number;
-	results: Game[];
-}
-
 class RawgHtml {
 	endpoint: string;
 
@@ -28,10 +7,10 @@ class RawgHtml {
 		this.endpoint = endpoint;
 	}
 
-	getAll() {
+	getAll<T>() {
 		const controller = new AbortController();
 
-		const request = rawgApi.get<FetchGameResponse>(this.endpoint, {
+		const request = rawgApi.get<T>(this.endpoint, {
 			signal: controller.signal,
 		});
 

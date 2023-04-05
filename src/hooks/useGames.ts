@@ -1,29 +1,23 @@
-import { CanceledError } from "axios";
-import { useState, useEffect } from "react";
-import create, { Game } from "../services/rawg-http";
+import { useData } from "./useData";
 
-export const useGames = () => {
-	const [games, setGames] = useState<Game[]>([]);
-	const [error, setError] = useState("");
-	const [isLoading, setLoading] = useState(false);
+export interface Platform {
+	id: number;
+	name: string;
+	slug: string;
+}
 
-	useEffect(() => {
-		setLoading(true);
-		const { request, cancel } = create("/games").getAll();
-		request
-			.then(({ data }) => {
-				{
-					setGames(data.results);
-					setLoading(false);
-				}
-			})
-			.catch((err) => {
-				if (err instanceof CanceledError) return;
-				setLoading(false);
-				setError(err.message);
-			});
+export interface Game {
+	id: number;
+	name: string;
+	slug: string;
+	rating: number;
+	parent_platforms: { platform: Platform }[];
+	background_image: string;
+	rating_top: number;
+	metacritic: number;
+	added: number;
+}
 
-		return () => cancel();
-	}, []);
-	return { games, error, isLoading };
-};
+const useGames = () => useData<Game>("/games");
+
+export default useGames;
