@@ -200,10 +200,6 @@ mergedTheme.unstable_sxConfig = {
 
 export default function App() {
 	const [selectedGenre, setGenre] = useState(null as unknown as number);
-	const imageArray = Array(5)
-		.fill(0)
-		.map((_, i) => `https://picsum.photos/id/${i}/200/300`);
-	console.log(imageArray);
 
 	return (
 		<CssVarsProvider theme={mergedTheme}>

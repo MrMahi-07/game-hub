@@ -17,6 +17,7 @@ const Recommended = ({ rating }: Props) => {
 		{ rate: 4, logo: thumbsUp },
 		{ rate: 5, logo: exceptional },
 	];
+	if (!rating) return null;
 
 	const [{ logo }] = ratings.filter((x) => x.rate == rating);
 

@@ -1,10 +1,6 @@
+import { number } from "zod";
 import { useData } from "./useData";
-
-export interface Platform {
-	id: number;
-	name: string;
-	slug: string;
-}
+import { Platform } from "./usePlatform";
 
 export interface Game {
 	id: number;
@@ -19,7 +15,11 @@ export interface Game {
 	short_screenshots: { image: string }[];
 }
 
-const useGames = (id: number | null) =>
-	useData<Game>("/games", { params: { genres: id } }, [id]);
+const useGames = (genreId: number | null, platformId: number | null) =>
+	useData<Game>(
+		"/games",
+		{ params: { genres: genreId, parent_platforms: platformId } },
+		[genreId, platformId]
+	);
 
 export default useGames;

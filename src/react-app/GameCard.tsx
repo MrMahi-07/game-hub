@@ -27,7 +27,7 @@ const GameCard = ({ game }: Props) => {
 	const [isActive, setActive] = useState(false);
 
 	return (
-		<Card sx={{ borderRadius: 4, boxShadow: "lg" }}>
+		<Card sx={{ borderRadius: 10, boxShadow: "lg" }}>
 			{game.short_screenshots.length > 1 && isActive ? (
 				<MouseEvents ss={game.short_screenshots} />
 			) : (
