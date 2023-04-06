@@ -1,12 +1,10 @@
-import * as React from "react";
 import Select, { selectClasses } from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import { Typography } from "@mui/joy";
-import { useState } from "react";
 
 interface Props {
-	onSelect: (platform: string) => void;
+	onSelect: (sort: string) => void;
 }
 
 export default function Sort({ onSelect }: Props) {

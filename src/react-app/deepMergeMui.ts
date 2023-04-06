@@ -1,8 +1,3 @@
-import Main from "./react-app/Main";
-import Grid from "@mui/joy/Grid";
-
-import NavBar from "./react-app/NavBarApp";
-
 import { deepmerge } from "@mui/utils";
 import type {} from "@mui/material/themeCssVarsAugmentation";
 import {
@@ -33,7 +28,6 @@ import {
 import colors from "@mui/joy/colors";
 import {
 	extendTheme as extendJoyTheme,
-	CssVarsProvider,
 	FontSize,
 	Theme as JoyTheme,
 	ThemeVars as JoyThemeVars,
@@ -41,12 +35,8 @@ import {
 } from "@mui/joy/styles";
 
 // Joy UI components
-import CssBaseline from "@mui/joy/CssBaseline";
 import { CommonColors } from "@mui/material/styles/createPalette";
 import { TypeBackground } from "@mui/material";
-import GenreList from "./react-app/GenreList";
-import { useState } from "react";
-import PlatformFilter from "./react-app/PlatformFilter";
 
 // extends Joy theme to include tokens from Material UI
 declare module "@mui/joy/styles" {
@@ -194,54 +184,8 @@ mergedTheme.generateCssVars = (colorScheme) => ({
 		joyTheme.generateCssVars(colorScheme).vars
 	) as unknown as JoyThemeVars,
 });
-mergedTheme.unstable_sxConfig = {
+
+export default mergedTheme.unstable_sxConfig = {
 	...muiTheme.unstable_sxConfig,
 	...joyTheme.unstable_sxConfig,
 };
-
-import { GameQuery } from "./hooks/useGames";
-import Sort from "./react-app/Sort";
-
-export default function App() {
-	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
-
-	return (
-		<CssVarsProvider theme={mergedTheme}>
-			<CssBaseline />
-			<br />
-			<Grid maxWidth={1880} mx={"auto"} container gap={2} sx={{ flexGrow: 1 }}>
-				<Grid xs={12}>
-					<NavBar />
-				</Grid>
-				<Grid
-					sx={{ width: 220, display: { sm: "none", xs: "none", md: "inline" } }}
-				>
-					<GenreList
-						onSelect={(id) => setGameQuery({ ...gameQuery, genre: id })}
-					/>
-				</Grid>
-				<Grid
-					xs={12}
-					sm={12}
-					md
-					container
-					mt={3}
-					justifyContent={"center"}
-					overflow={"hidden"}
-				>
-					<PlatformFilter
-						onSelect={(id) => setGameQuery({ ...gameQuery, platform: id })}
-					/>
-					<Sort
-						onSelect={(sort) => {
-							console.log(sort);
-
-							setGameQuery({ ...gameQuery, sort });
-						}}
-					/>
-					<Main {...gameQuery} />
-				</Grid>
-			</Grid>
-		</CssVarsProvider>
-	);
-}

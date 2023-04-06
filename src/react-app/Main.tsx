@@ -1,23 +1,14 @@
 import Masonry from "@mui/lab/Masonry";
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
-import { CircularProgress, Stack } from "@mui/joy";
 import SkeletonCard from "./SkeletonCard";
-import MouseEvents from "./MouseEvents";
-import PlatformFilter from "./PlatformFilter";
-import { useState } from "react";
+import { GameQuery } from "../hooks/useGames";
 
-interface Props {
-	genreId: number | null;
-}
-
-const Main = ({ genreId }: Props) => {
-	const [selectedPlatform, setPlatform] = useState<number | null>(null);
-	const { error, isLoading, data } = useGames(genreId, selectedPlatform);
+const Main = (gameQuery: GameQuery) => {
+	const { error, isLoading, data } = useGames(gameQuery);
 
 	return (
 		<>
-			<PlatformFilter onSelect={(id) => setPlatform(id)} />
 			<Masonry
 				columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4 }}
 				spacing={3.5}

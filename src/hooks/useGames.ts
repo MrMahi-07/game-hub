@@ -15,11 +15,23 @@ export interface Game {
 	short_screenshots: { image: string }[];
 }
 
-const useGames = (genreId: number | null, platformId: number | null) =>
+export interface GameQuery {
+	genre: number | null;
+	platform: number | null;
+	sort: string;
+}
+
+const useGames = (gameQuery: GameQuery) =>
 	useData<Game>(
 		"/games",
-		{ params: { genres: genreId, parent_platforms: platformId } },
-		[genreId, platformId]
+		{
+			params: {
+				genres: gameQuery.genre,
+				parent_platforms: gameQuery.platform,
+				ordering: gameQuery.sort,
+			},
+		},
+		[gameQuery]
 	);
 
 export default useGames;
