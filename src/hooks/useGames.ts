@@ -16,8 +16,10 @@ export interface Game {
 	rating_top: number;
 	metacritic: number;
 	added: number;
+	short_screenshots: { image: string }[];
 }
 
-const useGames = () => useData<Game>("/games");
+const useGames = (id: number | null) =>
+	useData<Game>("/games", { params: { genres: id } }, [id]);
 
 export default useGames;

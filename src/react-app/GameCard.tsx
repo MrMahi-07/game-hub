@@ -16,24 +16,36 @@ import { Game } from "../hooks/useGames";
 import Button from "@mui/joy/Button";
 import Add from "@mui/icons-material/Add";
 import imageDecompress from "../services/image-url";
+import { useState } from "react";
+import MouseEvents from "./MouseEvents";
 
 interface Props {
 	game: Game;
 }
 
 const GameCard = ({ game }: Props) => {
+	const [isActive, setActive] = useState(false);
+
 	return (
 		<Card sx={{ borderRadius: 4, boxShadow: "lg" }}>
-			<Box
-				component="img"
-				src={imageDecompress(game.background_image)}
-				alt={game.name}
-				sx={{
-					objectFit: "cover",
-					width: "100%",
-					aspectRatio: "16/9",
-				}}
-			/>
+			{game.short_screenshots.length > 1 && isActive ? (
+				<MouseEvents ss={game.short_screenshots} />
+			) : (
+				<Box
+					component="img"
+					src={imageDecompress(game.background_image)}
+					alt={game.name}
+					sx={{
+						objectFit: "cover",
+						width: "100%",
+						aspectRatio: "16/9",
+					}}
+					onMouseMove={() => {
+						setActive(!isActive);
+					}}
+					onMouseLeave={() => setActive(!isActive)}
+				/>
+			)}
 			<CardContent>
 				<Stack direction={"row"} justifyContent={"space-between"}>
 					<Platform platform={game.parent_platforms} />
@@ -70,3 +82,20 @@ const GameCard = ({ game }: Props) => {
 };
 
 export default GameCard;
+
+// {game.short_screenshots.length > 1 && isActive ? (
+// 	<MouseEvents ss={game.short_screenshots} />
+// ) : (
+// 	<Box
+// 		component="img"
+// 		src={imageDecompress(game.background_image)}
+// 		alt={game.name}
+// 		sx={{
+// 			objectFit: "cover",
+// 			width: "100%",
+// 			aspectRatio: "16/9",
+// 		}}
+// 		onMouseMove={() => setActive(!isActive)}
+// 		onMouseLeave={() => setActive(!isActive)}
+// 	/>
+// )}

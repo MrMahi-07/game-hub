@@ -45,6 +45,7 @@ import CssBaseline from "@mui/joy/CssBaseline";
 import { CommonColors } from "@mui/material/styles/createPalette";
 import { TypeBackground } from "@mui/material";
 import GenreList from "./react-app/GenreList";
+import { useState } from "react";
 
 // extends Joy theme to include tokens from Material UI
 declare module "@mui/joy/styles" {
@@ -198,6 +199,12 @@ mergedTheme.unstable_sxConfig = {
 };
 
 export default function App() {
+	const [selectedGenre, setGenre] = useState(null as unknown as number);
+	const imageArray = Array(5)
+		.fill(0)
+		.map((_, i) => `https://picsum.photos/id/${i}/200/300`);
+	console.log(imageArray);
+
 	return (
 		<CssVarsProvider theme={mergedTheme}>
 			<CssBaseline />
@@ -209,7 +216,7 @@ export default function App() {
 				<Grid
 					sx={{ width: 220, display: { sm: "none", xs: "none", md: "inline" } }}
 				>
-					<GenreList />
+					<GenreList onSelect={(id) => setGenre(id)} />
 				</Grid>
 				<Grid
 					xs={12}
@@ -220,20 +227,9 @@ export default function App() {
 					justifyContent={"center"}
 					overflow={"hidden"}
 				>
-					<Main />
+					<Main genreId={selectedGenre} />
 				</Grid>
 			</Grid>
 		</CssVarsProvider>
 	);
 }
-
-// export default function App() {
-// 	return (
-// 		<CssVarsProvider theme={mergedTheme}>
-// 			<CssBaseline />
-// 			<Grid>
-// 				<GenreList />
-// 			</Grid>
-// 		</CssVarsProvider>
-// 	);
-// }

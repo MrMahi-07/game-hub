@@ -1,4 +1,3 @@
-import React from "react";
 import {
 	SiNintendo,
 	SiXbox,
@@ -9,20 +8,15 @@ import {
 } from "react-icons/si";
 import { MdPhoneIphone } from "react-icons/md";
 import { AiFillAndroid } from "react-icons/ai";
-import { Icon, Stack } from "@mui/material";
-import { Platform } from "../services/rawg-http";
+import { Stack } from "@mui/material";
+import { Platform } from "../hooks/useGames";
 
 interface Props {
 	platform: { platform: Platform }[];
 }
 //
+
 const Platforms = ({ platform }: Props) => {
-	// const [
-	// 	{
-	// 		platform: { id },
-	// 	},
-	// ] = platform;
-	// console.log(id);
 	const platforms = [
 		{ id: 1, name: "PC", slug: "pc", icon: <SiWindows /> },
 		{

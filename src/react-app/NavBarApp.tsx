@@ -1,17 +1,13 @@
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ModeToggler from "./ModeToggler";
 import Input from "@mui/joy/Input";
 import SearchIcon from "@mui/icons-material/Search";
-import { Avatar } from "@mui/material";
+import { Avatar, Stack } from "@mui/material";
 import logo from "../assets/logo.svg";
 
 export default function NavBar() {
 	return (
-		<Box sx={{ flexGrow: 1, backgroundColor: "none" }}>
+		<Stack sx={{ flexGrow: 1, backgroundColor: "none" }}>
 			<Toolbar>
 				<Avatar
 					alt={logo}
@@ -28,6 +24,6 @@ export default function NavBar() {
 
 				<ModeToggler />
 			</Toolbar>
-		</Box>
+		</Stack>
 	);
 }

@@ -1,5 +1,3 @@
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import Brightness2Icon from "@mui/icons-material/Brightness2";
 import { useEffect, useState } from "react";
 import DarkMode from "@mui/icons-material/DarkMode";
 import LightMode from "@mui/icons-material/LightMode";

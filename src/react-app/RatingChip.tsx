@@ -5,8 +5,14 @@ interface Props {
 }
 
 const RatingChip = ({ critic }: Props) => {
+	if (!critic) return null;
 	return (
-		<Chip color="success" size="md" variant="soft" sx={{ borderRadius: 5 }}>
+		<Chip
+			sx={{ letterSpacing: 3, borderRadius: 5 }}
+			color="success"
+			size="md"
+			variant="soft"
+		>
 			{critic}
 		</Chip>
 	);

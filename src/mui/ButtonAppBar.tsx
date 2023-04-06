@@ -1,17 +1,16 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Theme from "../react-app/ModeToggler";
-import { Props } from "../react-app/ModeToggler";
+import { Stack } from "@mui/material";
 
-export default function ButtonAppBar({ onToggle, status }: Props) {
+export default function ButtonAppBar() {
 	return (
-		<Box sx={{ flexGrow: 1 }}>
+		<Stack sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
@@ -25,9 +24,9 @@ export default function ButtonAppBar({ onToggle, status }: Props) {
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						News
 					</Typography>
-					<Theme status={status} onToggle={onToggle}></Theme>
+					<Theme></Theme>
 				</Toolbar>
 			</AppBar>
-		</Box>
+		</Stack>
 	);
 }
