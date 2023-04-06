@@ -185,7 +185,9 @@ mergedTheme.generateCssVars = (colorScheme) => ({
 	) as unknown as JoyThemeVars,
 });
 
-export default mergedTheme.unstable_sxConfig = {
+mergedTheme.unstable_sxConfig = {
 	...muiTheme.unstable_sxConfig,
 	...joyTheme.unstable_sxConfig,
 };
+
+export default mergedTheme;
