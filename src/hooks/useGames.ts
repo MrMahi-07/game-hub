@@ -19,6 +19,7 @@ export interface GameQuery {
 	genre: number | null;
 	platform: number | null;
 	sort: string;
+	search: string;
 }
 
 const useGames = (gameQuery: GameQuery) =>
@@ -29,6 +30,7 @@ const useGames = (gameQuery: GameQuery) =>
 				genres: gameQuery.genre,
 				parent_platforms: gameQuery.platform,
 				ordering: gameQuery.sort,
+				search: gameQuery.search,
 			},
 		},
 		[gameQuery]

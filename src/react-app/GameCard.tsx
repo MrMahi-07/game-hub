@@ -18,6 +18,7 @@ import Add from "@mui/icons-material/Add";
 import imageDecompress from "../services/image-url";
 import { useState } from "react";
 import MouseEvents from "./MouseEvents";
+import GetTrailer from "./GetTrailer";
 
 interface Props {
 	game: Game;
@@ -26,10 +27,15 @@ interface Props {
 const GameCard = ({ game }: Props) => {
 	const [isActive, setActive] = useState(false);
 
+	// if(isActive)
+
 	return (
 		<Card sx={{ borderRadius: 10, boxShadow: "lg" }}>
 			{game.short_screenshots.length > 1 && isActive ? (
-				<MouseEvents ss={game.short_screenshots} />
+				<>
+					<MouseEvents ss={game.short_screenshots} />
+					{/* <GetTrailer gameId={game.id} /> */}
+				</>
 			) : (
 				<Box
 					component="img"

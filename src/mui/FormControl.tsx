@@ -31,11 +31,7 @@ const FormControl = () => {
 	} = useForm<FormData>({ resolver: zodResolver(schema) });
 
 	return (
-		<form
-			onSubmit={handleSubmit((data) => {
-				console.log(data);
-			})}
-		>
+		<form onSubmit={handleSubmit((data) => {})}>
 			<TextField
 				label="Name"
 				variant="outlined"

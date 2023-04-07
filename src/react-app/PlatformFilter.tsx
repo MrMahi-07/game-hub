@@ -37,7 +37,6 @@ export default function PlatformFilter({ onSelect }: Props) {
 			{data.map((d, i) => (
 				<Option
 					onClick={() => {
-						console.log(d.name);
 						onSelect(d.id);
 					}}
 					key={d.id}

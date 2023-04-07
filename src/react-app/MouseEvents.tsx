@@ -1,6 +1,7 @@
 import React, { MouseEvent, useState } from "react";
 import imageDecompress from "../services/image-url";
 import { Box, Card, CardContent, Stack } from "@mui/material";
+import GetTrailer from "./GetTrailer";
 
 interface Props {
 	ss: { image: string }[];
