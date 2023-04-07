@@ -10,6 +10,8 @@ import NavBar from "./react-app/NavBarApp";
 import PlatformFilter from "./react-app/PlatformFilter";
 import Sort from "./react-app/Sort";
 import GetTrailer from "./react-app/GetTrailer";
+import YouTubeCard from "./react-app/YtVideo";
+import YtVideo from "./react-app/YtVideo";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -48,6 +50,7 @@ export default function App() {
 							setGameQuery({ ...gameQuery, sort });
 						}}
 					/>
+					<YtVideo videoId="portal-2" />
 					<Main {...gameQuery} />
 				</Grid>
 			</Grid>

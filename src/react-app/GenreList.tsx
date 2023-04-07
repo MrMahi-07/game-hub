@@ -4,34 +4,15 @@ import { Avatar, List, ListItemButton, ListItemDecorator } from "@mui/joy";
 import imageDecompress from "../services/image-url";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import genreList from "../data/genreList.json";
 
 interface Props {
 	onSelect: (id: number) => void;
 }
 
 const GenreList = ({ onSelect }: Props) => {
-	const { isLoading, data } = useGenres();
+	// const { isLoading, data } = useGenres();
 	const [selectedGenre, setGenre] = useState(0);
-
-	if (isLoading) {
-		return (
-			<>
-				{Array(20)
-					.fill(0)
-					.map((x, i) => (
-						<Stack key={i} p={1} direction={"row"} spacing={2} width="100%">
-							<Skeleton
-								variant="circular"
-								width={50}
-								height={50}
-								sx={{ borderRadius: 10 }}
-							/>
-							<Skeleton animation="wave" variant="text" sx={{ width: "70%" }} />
-						</Stack>
-					))}
-			</>
-		);
-	}
 
 	return (
 		<List
@@ -40,7 +21,7 @@ const GenreList = ({ onSelect }: Props) => {
 				"--ListItem-paddingY": "10px",
 			}}
 		>
-			{data
+			{genreList
 				.sort((a, b) => (a.name > b.name ? 1 : -1))
 				.map((d) => (
 					<ListItemButton
