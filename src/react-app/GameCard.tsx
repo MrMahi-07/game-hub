@@ -19,6 +19,8 @@ import imageDecompress from "../services/image-url";
 import { useState } from "react";
 import MouseEvents from "./MouseEvents";
 import GetTrailer from "./GetTrailer";
+import YtVideo from "./YtVideo";
+import { log } from "console";
 
 interface Props {
 	game: Game;
@@ -26,6 +28,7 @@ interface Props {
 
 const GameCard = ({ game }: Props) => {
 	const [isActive, setActive] = useState(false);
+	console.log(game);
 
 	// if(isActive)
 
@@ -34,7 +37,7 @@ const GameCard = ({ game }: Props) => {
 			{game.short_screenshots.length > 1 && isActive ? (
 				<>
 					<MouseEvents ss={game.short_screenshots} />
-					{/* <GetTrailer gameId={game.id} /> */}
+					<YtVideo game={game} isLoading={isActive} />
 				</>
 			) : (
 				<Box

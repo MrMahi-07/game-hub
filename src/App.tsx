@@ -9,9 +9,7 @@ import Main from "./react-app/Main";
 import NavBar from "./react-app/NavBarApp";
 import PlatformFilter from "./react-app/PlatformFilter";
 import Sort from "./react-app/Sort";
-import GetTrailer from "./react-app/GetTrailer";
-import YouTubeCard from "./react-app/YtVideo";
-import YtVideo from "./react-app/YtVideo";
+import { Stack } from "@mui/joy";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -42,16 +40,17 @@ export default function App() {
 					/>
 				</Grid>
 				<Grid xs={12} sm={12} md container mt={3} gap={1} overflow={"hidden"}>
-					<PlatformFilter
-						onSelect={(id) => setGameQuery({ ...gameQuery, platform: id })}
-					/>
-					<Sort
-						onSelect={(sort) => {
-							setGameQuery({ ...gameQuery, sort });
-						}}
-					/>
-					<YtVideo videoId="portal-2" />
-					<Main {...gameQuery} />
+					<Stack direction={"row"}>
+						<PlatformFilter
+							onSelect={(id) => setGameQuery({ ...gameQuery, platform: id })}
+						/>
+						<Sort
+							onSelect={(sort) => {
+								setGameQuery({ ...gameQuery, sort });
+							}}
+						/>
+					</Stack>
+					<Main gameQuery={gameQuery} />
 				</Grid>
 			</Grid>
 		</CssVarsProvider>
