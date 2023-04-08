@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@angular/youtube-player": "^15.2.6",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/public-sans": "^4.5.12",
@@ -18,6 +19,8 @@
     "@mui/joy": "^5.0.0-alpha.73",
     "@mui/lab": "^5.0.0-alpha.124",
     "@mui/material": "^5.11.15",
+    "@types/youtube": "^0.0.47",
+    "@types/youtube-player": "^5.5.7",
     "axios": "^1.3.4",
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",

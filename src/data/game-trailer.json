@@ -1,27 +1,27 @@
-[
-	{
-		"id": 4,
-		"name": "game name",
-		"slug": "game-slug",
-		"title": "Portal 2 - Full Co-op Trailer",
-		"description": "The full trailer of the Co-op bots as seen at PAX 2010.",
-		"videoId": "A88YiZdXugA",
-		"thumbnails": {
-			"default": {
-				"url": "https://i.ytimg.com/vi/A88YiZdXugA/default.jpg",
-				"width": 120,
-				"height": 90
-			},
-			"high": {
-				"url": "https://i.ytimg.com/vi/A88YiZdXugA/hqdefault.jpg",
-				"width": 480,
-				"height": 360
-			},
-			"medium": {
-				"url": "https://i.ytimg.com/vi/A88YiZdXugA/mqdefault.jpg",
-				"width": 320,
-				"height": 180
-			}
+{
+	"id": 3498,
+	"name": "Grand Theft Auto V",
+	"slug": "grand-theft-auto-v",
+	"title": "Grand Theft Auto V - Gameplay Trailer",
+	"description": "At long last, the debut gameplay trailer for Grand Theft Auto V has arrived. You can watch it right here, right now.",
+	"videoId": "YrtCnL62pB8",
+	"url": "https://www.youtube-nocookie.com/embed/YrtCnL62pB8?controls=0&loop=1&amp;start=7&amp;autoplay=1&mute=0",
+	"url2": "https://www.youtube-nocookie.com/embed/YrtCnL62pB8?controls=0&loop=1&amp;start=7&mute=1",
+	"thumbnails": {
+		"default": {
+			"url": "https://i.ytimg.com/vi/YrtCnL62pB8/default.jpg",
+			"width": 120,
+			"height": 90
+		},
+		"medium": {
+			"url": "https://i.ytimg.com/vi/YrtCnL62pB8/mqdefault.jpg",
+			"width": 320,
+			"height": 180
+		},
+		"high": {
+			"url": "https://i.ytimg.com/vi/YrtCnL62pB8/hqdefault.jpg",
+			"width": 480,
+			"height": 360
 		}
 	}
-]
+}

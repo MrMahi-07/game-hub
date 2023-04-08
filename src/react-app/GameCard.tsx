@@ -21,40 +21,37 @@ import MouseEvents from "./MouseEvents";
 import GetTrailer from "./GetTrailer";
 import YtVideo from "./YtVideo";
 import { log } from "console";
+import Banner from "./Banner";
+import YoutubePlayer from "./YoutubePlayer";
+import HoverClick from "./HoverClick";
 
 interface Props {
 	game: Game;
 }
 
 const GameCard = ({ game }: Props) => {
-	const [isActive, setActive] = useState(false);
-	console.log(game);
+	let [isActive, setActive] = useState(false);
 
 	// if(isActive)
 
 	return (
 		<Card sx={{ borderRadius: 10, boxShadow: "lg" }}>
-			{game.short_screenshots.length > 1 && isActive ? (
-				<>
-					<MouseEvents ss={game.short_screenshots} />
-					<YtVideo game={game} isLoading={isActive} />
-				</>
-			) : (
-				<Box
-					component="img"
-					src={imageDecompress(game.background_image)}
-					alt={game.name}
-					sx={{
-						objectFit: "cover",
-						width: "100%",
-						aspectRatio: "16/9",
-					}}
-					onMouseMove={() => {
-						setActive(!isActive);
-					}}
-					onMouseLeave={() => setActive(!isActive)}
-				/>
-			)}
+			<Box
+				// overflow={"hidden"}
+				position={"relative"}
+				sx={{
+					aspectRatio: "16/9",
+				}}
+				onMouseLeave={() => {
+					setActive(false);
+				}}
+				onMouseOver={() => {
+					setActive(true);
+				}}
+			>
+				{/* <YtVideo /> <Banner /> */}
+				<HoverClick />
+			</Box>
 			<CardContent>
 				<Stack direction={"row"} justifyContent={"space-between"}>
 					<Platform platform={game.parent_platforms} />
@@ -91,20 +88,3 @@ const GameCard = ({ game }: Props) => {
 };
 
 export default GameCard;
-
-// {game.short_screenshots.length > 1 && isActive ? (
-// 	<MouseEvents ss={game.short_screenshots} />
-// ) : (
-// 	<Box
-// 		component="img"
-// 		src={imageDecompress(game.background_image)}
-// 		alt={game.name}
-// 		sx={{
-// 			objectFit: "cover",
-// 			width: "100%",
-// 			aspectRatio: "16/9",
-// 		}}
-// 		onMouseMove={() => setActive(!isActive)}
-// 		onMouseLeave={() => setActive(!isActive)}
-// 	/>
-// )}
