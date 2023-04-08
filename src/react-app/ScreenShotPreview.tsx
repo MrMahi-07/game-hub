@@ -1,13 +1,12 @@
-import React, { MouseEvent, useState } from "react";
+import { MouseEvent, useState } from "react";
 import imageDecompress from "../services/image-url";
-import { Box, Card, CardContent, Stack } from "@mui/material";
-import GetTrailer from "./GetTrailer";
+import { Box, Stack } from "@mui/material";
 
 interface Props {
 	ss: { image: string }[];
 }
 
-function MouseEvents({ ss }: Props) {
+function ScreenShotPreview({ ss }: Props) {
 	const [percentage, setPercentage] = useState(0);
 	const [isActive, setActive] = useState(true);
 	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
@@ -21,8 +20,6 @@ function MouseEvents({ ss }: Props) {
 	}
 
 	let imageIndex = Math.floor(percentage * ss.length);
-
-	// if (imageIndex) return null;
 
 	return (
 		<div
@@ -74,4 +71,4 @@ function MouseEvents({ ss }: Props) {
 	);
 }
 
-export default MouseEvents;
+export default ScreenShotPreview;

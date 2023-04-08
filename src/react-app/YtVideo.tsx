@@ -1,22 +1,8 @@
-import { Game } from "../hooks/useGames";
-import useYtTrailer from "../hooks/useYtTrailer";
-
-import Link from "@mui/joy/Link";
-import Launch from "@mui/icons-material/Launch";
-import { YtProps } from "../hooks/useYtTrailer";
 import { Box } from "@mui/material";
 import data from "../data/game-trailer.json";
-import { log } from "console";
-import { Button, CircularProgress, Stack } from "@mui/joy";
-import NewsCard2Demo from "./NewsCard2Demo";
-import { useEffect, useRef, useState } from "react";
+import { CircularProgress } from "@mui/joy";
+import { useRef } from "react";
 
-interface Props {
-	// game: Game;
-	isLoading: () => void;
-}
-
-// function YtVideo({ game, isLoading }: Props) {
 function YtVideo() {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 

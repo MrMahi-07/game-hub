@@ -17,12 +17,8 @@ import Button from "@mui/joy/Button";
 import Add from "@mui/icons-material/Add";
 import imageDecompress from "../services/image-url";
 import { useState } from "react";
-import MouseEvents from "./MouseEvents";
-import GetTrailer from "./GetTrailer";
 import YtVideo from "./YtVideo";
-import { log } from "console";
 import Banner from "./Banner";
-import HoverClick from "./HoverClick";
 
 interface Props {
 	game: Game;
@@ -31,12 +27,9 @@ interface Props {
 const GameCard = ({ game }: Props) => {
 	let [isActive, setActive] = useState(false);
 
-	// if(isActive)
-
 	return (
 		<Card sx={{ borderRadius: 10, boxShadow: "lg" }}>
 			<Box
-				// overflow={"hidden"}
 				position={"relative"}
 				sx={{
 					aspectRatio: "16/9",
@@ -48,13 +41,12 @@ const GameCard = ({ game }: Props) => {
 					setActive(true);
 				}}
 			>
-				{/* {isActive ? (
-					<YtVideo />
-				) : (
-					<Banner id={game.id} name={game.name} image={game.background_image} />
-				)} */}
 				{isActive && <YtVideo />}
-				<Banner id={game.id} name={game.name} image={game.background_image} />
+				<Banner
+					id={game.id}
+					name={game.name}
+					image={imageDecompress(game.background_image)}
+				/>
 			</Box>
 			<CardContent>
 				<Stack direction={"row"} justifyContent={"space-between"}>

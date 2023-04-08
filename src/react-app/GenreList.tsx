@@ -1,9 +1,6 @@
 import { useState } from "react";
-import useGenres from "../hooks/useGenre";
 import { Avatar, List, ListItemButton, ListItemDecorator } from "@mui/joy";
 import imageDecompress from "../services/image-url";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
 import genreList from "../data/genreList.json";
 
 interface Props {
