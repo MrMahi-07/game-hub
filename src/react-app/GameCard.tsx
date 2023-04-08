@@ -22,7 +22,6 @@ import GetTrailer from "./GetTrailer";
 import YtVideo from "./YtVideo";
 import { log } from "console";
 import Banner from "./Banner";
-import YoutubePlayer from "./YoutubePlayer";
 import HoverClick from "./HoverClick";
 
 interface Props {
@@ -45,12 +44,17 @@ const GameCard = ({ game }: Props) => {
 				onMouseLeave={() => {
 					setActive(false);
 				}}
-				onMouseOver={() => {
+				onMouseOver={(e) => {
 					setActive(true);
 				}}
 			>
-				{/* <YtVideo /> <Banner /> */}
-				<HoverClick />
+				{/* {isActive ? (
+					<YtVideo />
+				) : (
+					<Banner id={game.id} name={game.name} image={game.background_image} />
+				)} */}
+				{isActive && <YtVideo />}
+				<Banner id={game.id} name={game.name} image={game.background_image} />
 			</Box>
 			<CardContent>
 				<Stack direction={"row"} justifyContent={"space-between"}>

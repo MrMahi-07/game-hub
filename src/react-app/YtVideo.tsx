@@ -9,7 +9,7 @@ import data from "../data/game-trailer.json";
 import { log } from "console";
 import { Button, CircularProgress, Stack } from "@mui/joy";
 import NewsCard2Demo from "./NewsCard2Demo";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
 	// game: Game;
@@ -18,31 +18,46 @@ interface Props {
 
 // function YtVideo({ game, isLoading }: Props) {
 function YtVideo() {
-	let [isLoaded, setLoaded] = useState(false);
-	const [play, setPlay] = useState(false);
-	let urUrl = "https://www.youtube-nocookie.com/embed/YrtCnL62pB8?controls=0";
-
-	let url = play ? urUrl : urUrl + "&amp;autoplay=1";
-	// const { data, error } = useYtTrailer(game);
-	console.log(123);
+	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	return (
 		<>
-			{/* {isLoaded ? ( */}
-			{/* // <NewsCard2Demo /> */}
 			<Box
-				position={"absolute"}
-				component="iframe"
-				allowFullScreen
-				src={url}
-				allow="autoplay;"
-				border={0}
-				width="100%"
+				width={1}
 				sx={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					position: "absolute",
 					aspectRatio: "16/9",
+					zIndex: 2,
+					"&:hover .progress": {
+						opacity: 0,
+						transition: `opacity 5s`,
+					},
+					"&:hover .video": {
+						opacity: 1,
+						transition: `opacity 5s`,
+					},
 				}}
-			/>
-			<Button onClick={() => setPlay(!play)}>play</Button>
+			>
+				<CircularProgress size="lg" className="progress" />
+				<Box
+					ref={buttonRef}
+					className="video"
+					position={"absolute"}
+					component="iframe"
+					allowFullScreen
+					src={data.url}
+					border={0}
+					loading="lazy"
+					width="100%"
+					sx={{
+						aspectRatio: "16/9",
+						opacity: 0,
+					}}
+				/>
+			</Box>
 		</>
 	);
 }

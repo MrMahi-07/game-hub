@@ -6,11 +6,16 @@ const HoverClick = () => {
 	useEffect(() => {
 		const button = buttonRef.current;
 		if (button) {
+			const handleClick = () => {
+				// do something on click
+			};
 			const handleMouseEnter = () => {
 				button.click();
 			};
+			button.addEventListener("click", handleClick);
 			button.addEventListener("mouseenter", handleMouseEnter);
 			return () => {
+				button.removeEventListener("click", handleClick);
 				button.removeEventListener("mouseenter", handleMouseEnter);
 			};
 		}

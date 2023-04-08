@@ -1,8 +1,19 @@
-const Banner = () => {
+import { Box } from "@mui/material";
+
+interface Props {
+	id: number;
+	name: string;
+	image: string;
+}
+
+const Banner = ({ id, name, image }: Props) => {
 	return (
-		<img
-			src="https://media.rawg.io/media/crop/600/400/games/267/267bd0dbc496f52692487d07d014c061.jpg"
-			alt="animal"
+		<Box
+			key={id}
+			position={"absolute"}
+			component={"img"}
+			src={image}
+			alt={name}
 			width={"100%"}
 			style={{ aspectRatio: "16/9" }}
 		/>
