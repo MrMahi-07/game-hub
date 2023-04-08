@@ -4,12 +4,13 @@ import Option from "@mui/joy/Option";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import { Typography } from "@mui/joy";
 import usePlatform, { Platform } from "../hooks/usePlatform";
+import data from "../data/parent-platform.json";
 
 interface Props {
 	onSelect: (id: number) => void;
 }
 export default function PlatformFilter({ onSelect }: Props) {
-	const { data } = usePlatform();
+	// const { data } = usePlatform();
 
 	return (
 		<Select

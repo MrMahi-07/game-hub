@@ -6,7 +6,7 @@ interface Props {
 	ss: { image: string }[];
 }
 
-function ScreenShotPreview({ ss }: Props) {
+function SSPreview({ ss }: Props) {
 	const [percentage, setPercentage] = useState(0);
 	const [isActive, setActive] = useState(true);
 	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
@@ -71,4 +71,4 @@ function ScreenShotPreview({ ss }: Props) {
 	);
 }
 
-export default ScreenShotPreview;
+export default SSPreview;

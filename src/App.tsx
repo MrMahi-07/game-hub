@@ -10,6 +10,9 @@ import NavBar from "./react-app/NavBarApp";
 import PlatformFilter from "./react-app/PlatformFilter";
 import Sort from "./react-app/Sort";
 import { Stack } from "@mui/joy";
+import ExpandableSlider from "./react-app/ExpandableSlider";
+import data from "./data/GameData.json";
+import Masonry from "@mui/lab/Masonry";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -40,17 +43,24 @@ export default function App() {
 					/>
 				</Grid>
 				<Grid xs={12} sm={12} md container mt={3} gap={1} overflow={"hidden"}>
-					<Stack direction={"row"}>
-						<PlatformFilter
-							onSelect={(id) => setGameQuery({ ...gameQuery, platform: id })}
-						/>
-						<Sort
-							onSelect={(sort) => {
-								setGameQuery({ ...gameQuery, sort });
-							}}
-						/>
-					</Stack>
-					<Main gameQuery={gameQuery} />
+					<Grid xs={12}>
+						<Stack direction={"row"}>
+							<PlatformFilter
+								onSelect={(id) => setGameQuery({ ...gameQuery, platform: id })}
+							/>
+							<Sort
+								onSelect={(sort) => {
+									setGameQuery({ ...gameQuery, sort });
+								}}
+							/>
+						</Stack>
+						{/* <Main gameQuery={gameQuery} /> */}
+					</Grid>
+					<Masonry columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
+						{data.map((d) => (
+							<ExpandableSlider key={d.id} game={d} />
+						))}
+					</Masonry>
 				</Grid>
 			</Grid>
 		</CssVarsProvider>

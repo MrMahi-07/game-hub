@@ -5,20 +5,22 @@ import Typography from "@mui/material/Typography";
 import useGames from "../hooks/useGames";
 import { GameQuery } from "../hooks/useGames";
 import { useState } from "react";
+import data from "../data/GameData.json";
 
 interface Props {
 	gameQuery: GameQuery;
 }
 
 const Main = ({ gameQuery }: Props) => {
-	const { error, isLoading, data } = useGames(gameQuery);
-
-	if (error)
-		return (
-			<Typography color={"error"} gutterBottom variant="h3" component="div">
-				{error}
-			</Typography>
-		);
+	// const { error, isLoading, data } = useGames(gameQuery);
+	const error = false;
+	const isLoading = false;
+	// if (error)
+	// 	return (
+	// 		<Typography color={"error"} gutterBottom variant="h3" component="div">
+	// 			{error}
+	// 		</Typography>
+	// 	);
 
 	return (
 		<>

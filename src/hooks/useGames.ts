@@ -1,6 +1,7 @@
 import { number } from "zod";
 import { useData } from "./useData";
 import { Platform } from "./usePlatform";
+import { Genre } from "./useGenre";
 
 export interface Game {
 	id: number;
@@ -13,6 +14,8 @@ export interface Game {
 	metacritic: number;
 	added: number;
 	short_screenshots: { image: string }[];
+	released: string;
+	genres: Genre[];
 }
 
 export interface GameQuery {

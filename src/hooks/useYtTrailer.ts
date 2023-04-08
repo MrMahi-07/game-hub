@@ -2,7 +2,6 @@ import { Box, makeStyles } from "@mui/material";
 import ytApi from "../services/yt-api";
 import { useEffect, useState } from "react";
 import { Game } from "../hooks/useGames";
-import { log } from "console";
 import { CanceledError } from "axios";
 
 export interface YtProps {
