@@ -1,24 +1,8 @@
-import { TypeOf } from "zod";
 import gameData from "../data/GameData.json";
 import data from "../data/RawTrailersData.json";
-import { Game } from "../hooks/useGames";
 import { YtProps } from "../hooks/useYtTrailer";
 
-interface Data {
-	id: {
-		videoId: string;
-	};
-	snippet: {
-		title: string;
-		description: string;
-		thumbnails: { any: any };
-	};
-	params: {
-		q: string;
-	};
-}
-
-const YtJson = (dat: Data[]) => {
+const YtArrayTest = () => {
 	let ytData: YtProps[] = [];
 	data.forEach((x) => {
 		let params = x.config.params;
@@ -26,7 +10,7 @@ const YtJson = (dat: Data[]) => {
 		let len = " video game trailer";
 		let search = params.q.substring(0, params.q.length - len.length);
 
-		let info = gameData.forEach((g) => {
+		gameData.forEach((g) => {
 			if (g.name === search) {
 				ytData.push({
 					id: g.id,
@@ -42,9 +26,7 @@ const YtJson = (dat: Data[]) => {
 		});
 	});
 	console.log(ytData);
-};
 
-const YtArrayTest = () => {
 	return <div>YtArrayTest</div>;
 };
 

@@ -15,6 +15,7 @@ import gameData from "./data/GameData.json";
 import Masonry from "@mui/lab/Masonry";
 import useYtTrailer from "./hooks/useYtTrailer";
 import YtArrayTest from "./react-app/YtArrayTest";
+import SSPreview from "./react-app/SSPreview";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -58,12 +59,13 @@ export default function App() {
 						</Stack>
 						{/* <Main gameQuery={gameQuery} /> */}
 					</Grid>
-					{/* <Masonry columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
-						{data.map((d) => (
-							<ExpandableSlider key={d.id} game={d} />
-						))}
-					</Masonry> */}
-					<YtArrayTest />
+					<Masonry columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
+						{gameData
+							.filter((_, i) => i == 0)
+							.map((d) => (
+								<ExpandableSlider key={d.id} game={d} />
+							))}
+					</Masonry>
 				</Grid>
 			</Grid>
 		</CssVarsProvider>

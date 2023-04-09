@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useRef, useState } from "react";
 import imageDecompress from "../services/image-url";
 import { Box, Stack } from "@mui/material";
 
@@ -7,41 +7,37 @@ interface Props {
 }
 
 function SSPreview({ ss }: Props) {
-	const [percentage, setPercentage] = useState(0);
-	const [isActive, setActive] = useState(true);
-	function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
-		let set = 10;
-		let left = e.currentTarget.offsetLeft;
-		let width = e.currentTarget.offsetWidth;
+	const [getter, setGetter] = useState(0.0);
 
-		if (e.clientX - set > left && e.clientX + set < left + width) {
-			setPercentage((e.clientX - left) / width);
+	const handleEvent = (e: MouseEvent) => {
+		e.preventDefault();
+		let b = e.currentTarget.getBoundingClientRect();
+
+		if (b.x && b.width) {
+			let val = Math.abs((e.clientX - b.x) / b.width) % 1;
+
+			setGetter(val);
+			val < 0 && console.log(val, b.x);
 		}
-	}
+	};
 
-	let imageIndex = Math.floor(percentage * ss.length);
+	let imageIndex = Math.floor(getter * ss.length);
 
 	return (
-		<div
-			onMouseMove={(e) => {
-				handleMouseMove(e);
-				setActive(true);
-			}}
-			style={{ position: "relative" }}
-			onMouseLeave={() => {
-				setPercentage(0);
-				setActive(false);
-			}}
-		>
+		<Box position={"absolute"}>
 			<Box
+				onMouseMove={handleEvent}
+				onMouseLeave={() => setGetter(0)}
 				component="img"
 				src={imageDecompress(ss[imageIndex].image)}
 				alt={"game name"}
+				loading="lazy"
 				sx={{
 					objectFit: "cover",
 					width: "100%",
 					aspectRatio: "16/9",
 					transition: "all .4s",
+					position: "relative",
 				}}
 			/>
 			<Stack
@@ -50,9 +46,10 @@ function SSPreview({ ss }: Props) {
 				p={2}
 				direction={"row"}
 				sx={{
-					visibility: isActive ? "visible" : "hidden",
+					visibility: getter ? "visible" : "hidden",
 					position: "absolute",
 					bottom: 0,
+					zIndex: 3,
 				}}
 			>
 				{ss.map((_, i) => (
@@ -67,7 +64,7 @@ function SSPreview({ ss }: Props) {
 					/>
 				))}
 			</Stack>
-		</div>
+		</Box>
 	);
 }
 

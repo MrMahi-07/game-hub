@@ -34,7 +34,7 @@ function YtVideo() {
 					position={"absolute"}
 					component="iframe"
 					allowFullScreen
-					src={data.url}
+					src={data[1].url}
 					border={0}
 					loading="lazy"
 					width="100%"

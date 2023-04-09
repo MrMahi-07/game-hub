@@ -31,6 +31,10 @@ import Add from "@mui/icons-material/Add";
 import { Game } from "../hooks/useGames";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import imageDecompress from "../services/image-url";
+import YtVideo from "./YtVideo";
+import link from "../data/game-trailer.json";
+import SSPreview from "./SSPreview";
+
 export default function ExpandableSlider({ game }: Props) {
 	const [checked, setChecked] = useState(false);
 
@@ -42,15 +46,38 @@ export default function ExpandableSlider({ game }: Props) {
 
 	return (
 		<Card
-			sx={{ borderRadius: 10, boxShadow: "lg" }}
-			onMouseEnter={() => setChecked(!true)}
-			onMouseLeave={() => setChecked(!false)}
+			sx={{
+				borderRadius: 10,
+				position: "relative",
+				boxShadow: "lg",
+				"&:hover": {
+					transform: "scale(1.01)",
+					transition: "all .3s",
+				},
+				"&:hover .progress": {
+					opacity: 0,
+					transition: `opacity 5s`,
+				},
+				"&:hover .video": {
+					opacity: 1,
+					transition: `opacity 5s`,
+				},
+			}}
+			onMouseEnter={() => setChecked(true)}
+			onMouseLeave={() => setChecked(false)}
 		>
+			{checked &&
+			link.some((x) => Math.round(Math.random()) && x.id == game.id) ? (
+				<YtVideo />
+			) : (
+				<SSPreview ss={game.short_screenshots} />
+			)}
+
 			<CardMedia
 				component={"img"}
 				sx={{ aspectRatio: "16/9", width: 1 }}
 				image={imageDecompress(game.background_image)}
-				title="green iguana"
+				title={game.name}
 				loading="lazy"
 			/>
 			<CardContent>
@@ -90,7 +117,7 @@ export default function ExpandableSlider({ game }: Props) {
 						checkedIcon={<Favorite sx={{ color: "red" }} />}
 					/>
 				</Stack>
-				<Collapse in={!checked} sx={{ width: 1, ml: "0 !important" }}>
+				<Collapse in={checked} sx={{ width: 1, ml: "0 !important" }}>
 					<ListItem>
 						<ListItemText
 							sx={{ display: "flex", justifyContent: "space-between" }}
