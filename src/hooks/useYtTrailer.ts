@@ -2,7 +2,7 @@ import { Box, makeStyles } from "@mui/material";
 import ytApi from "../services/yt-api";
 import { useEffect, useState } from "react";
 import { Game } from "../hooks/useGames";
-import { CanceledError } from "axios";
+import axios, { CanceledError } from "axios";
 
 export interface YtProps {
 	id: number;
@@ -15,52 +15,59 @@ export interface YtProps {
 	thumbnails: any;
 }
 
-function useYtTrailer(game: Game) {
+function useYtTrailer(game: Game[]) {
 	const [data, setData] = useState({} as YtProps);
 	const [error, setError] = useState("");
 
 	useEffect(() => {
 		const controller = new AbortController();
 
-		ytApi
-			.get("/search", {
-				params: {
-					q: game.name + " video game trailer",
-				},
-				signal: controller.signal,
-			})
-			.then(({ data: { items } }) => {
-				let info = {
-					id: game.id,
-					name: game.name,
-					slug: game.slug,
-					title: items[0].snippet.title,
-					description: items[0].snippet.description,
-					videoId: items[0].id.videoId,
-					url: `https://www.youtube.com/embed/${items[0].id.videoId}?controls=0&amp;start=7`,
-					thumbnails: items[0].snippet.thumbnails,
-				};
-				setData(info);
-			})
-			.catch((err) => {
-				if (err instanceof CanceledError) return;
-				setError(err.message);
-			});
+		// const end = game
+		// 	.filter((_, i) => i > 2)
+		// 	.map((d, i) =>
+		// 		ytApi.get(`/search`, {
+		// 			params: {
+		// 				q: d.name + " video game trailer",
+		// 			},
+		// 		})
+		// 	);
 
-		return () => controller.abort();
+		Promise.all(end)
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((err) => console.log(err.messa));
+
+		// ytApi
+		// axios
+		// 	.get("/search", {
+		// 		params: {
+		// 			q: game[0].name + " video game trailer",
+		// 		},
+		// 		signal: controller.signal,
+		// 	})
+		// 	.then(({ data: { items } }) => {
+		// 		let info = {
+		// 			id: game[0].id,
+		// 			name: game[0].name,
+		// 			slug: game[0].slug,
+		// 			title: items[0].snippet.title,
+		// 			description: items[0].snippet.description,
+		// 			videoId: items[0].id.videoId,
+		// 			url: `https://www.youtube.com/embed/${items[0].id.videoId}?controls=0&amp;start=7`,
+		// 			thumbnails: items[0].snippet.thumbnails,
+		// 		};
+		// 		setData(info);
+		// 	})
+		// 	.catch((err) => {
+		// 		if (err instanceof CanceledError) return;
+		// 		setError(err.message);
+		// 	});
+
+		// return () => controller.abort();
 	}, [game]);
 
 	return { data, error };
 }
 
 export default useYtTrailer;
-
-// <iframe
-// 	width="560"
-// 	height="315"
-// 	src="https://www.youtube.com/embed/YrtCnL62pB8?controls=0&amp;start=7"
-// 	title="YouTube video player"
-// 	frameborder="0"
-// 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-// 	allowfullscreen
-// ></iframe>;

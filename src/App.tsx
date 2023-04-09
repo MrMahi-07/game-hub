@@ -11,8 +11,10 @@ import PlatformFilter from "./react-app/PlatformFilter";
 import Sort from "./react-app/Sort";
 import { Stack } from "@mui/joy";
 import ExpandableSlider from "./react-app/ExpandableSlider";
-import data from "./data/GameData.json";
+import gameData from "./data/GameData.json";
 import Masonry from "@mui/lab/Masonry";
+import useYtTrailer from "./hooks/useYtTrailer";
+import YtArrayTest from "./react-app/YtArrayTest";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -56,11 +58,12 @@ export default function App() {
 						</Stack>
 						{/* <Main gameQuery={gameQuery} /> */}
 					</Grid>
-					<Masonry columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
+					{/* <Masonry columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
 						{data.map((d) => (
 							<ExpandableSlider key={d.id} game={d} />
 						))}
-					</Masonry>
+					</Masonry> */}
+					<YtArrayTest />
 				</Grid>
 			</Grid>
 		</CssVarsProvider>
