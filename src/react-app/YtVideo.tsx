@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import data from "../data/game-trailer.json";
-import { CircularProgress } from "@mui/joy";
 import { useRef } from "react";
 
 function YtVideo() {
@@ -17,17 +16,8 @@ function YtVideo() {
 					position: "absolute",
 					aspectRatio: "16/9",
 					zIndex: 2,
-					"&:hover .progress": {
-						opacity: 0,
-						transition: `opacity 5s`,
-					},
-					"&:hover .video": {
-						opacity: 1,
-						transition: `opacity 5s`,
-					},
 				}}
 			>
-				<CircularProgress size="lg" className="progress" />
 				<Box
 					ref={buttonRef}
 					className="video"
@@ -40,7 +30,6 @@ function YtVideo() {
 					width="100%"
 					sx={{
 						aspectRatio: "16/9",
-						opacity: 0,
 					}}
 				/>
 			</Box>

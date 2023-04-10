@@ -6,6 +6,7 @@ import useGames from "../hooks/useGames";
 import { GameQuery } from "../hooks/useGames";
 import { useState } from "react";
 import data from "../data/GameData.json";
+import ExpandableSlider from "./ExpandableSlider";
 
 interface Props {
 	gameQuery: GameQuery;
@@ -27,7 +28,10 @@ const Main = ({ gameQuery }: Props) => {
 			<Masonry
 				columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4 }}
 				spacing={3.5}
-				sx={{ alignContent: { sm: "center", md: "flex-start" }, mx: "auto" }}
+				sx={{
+					alignContent: { sm: "center", md: "flex-start" },
+					mx: "auto",
+				}}
 			>
 				{isLoading
 					? Array(20)
@@ -40,8 +44,9 @@ const Main = ({ gameQuery }: Props) => {
 								></SkeletonCard>
 							))
 					: data
-							.filter((_, i) => i == 0)
-							.map((d) => <GameCard key={d.id} game={d} />)}
+							.filter((_, i) => i <= 15)
+							// .map((d) => <GameCard key={d.id} game={d} />)}
+							.map((d) => <ExpandableSlider key={d.id} game={d} />)}
 			</Masonry>
 		</>
 	);

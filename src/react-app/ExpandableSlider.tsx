@@ -1,13 +1,15 @@
 import {
 	Box,
+	Breadcrumbs,
 	Collapse,
 	Divider,
 	Link,
 	ListItem,
 	ListItemText,
 	Stack,
+	emphasize,
 } from "@mui/material";
-import { useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -34,143 +36,163 @@ import imageDecompress from "../services/image-url";
 import YtVideo from "./YtVideo";
 import link from "../data/game-trailer.json";
 import SSPreview from "./SSPreview";
+import { relative } from "path";
 
 export default function ExpandableSlider({ game }: Props) {
-	const [checked, setChecked] = useState(false);
-
 	let LocaleConfig: Intl.DateTimeFormatOptions = { dateStyle: "medium" };
 	let released = new Date(game.released).toLocaleDateString(
 		"en-US",
 		LocaleConfig
 	);
 
-	return (
-		<Card
-			sx={{
-				borderRadius: 10,
-				position: "relative",
-				boxShadow: "lg",
-				"&:hover": {
-					transform: "scale(1.01)",
-					transition: "all .3s",
-				},
-				"&:hover .progress": {
-					opacity: 0,
-					transition: `opacity 5s`,
-				},
-				"&:hover .video": {
-					opacity: 1,
-					transition: `opacity 5s`,
-				},
-			}}
-			onMouseEnter={() => setChecked(true)}
-			onMouseLeave={() => setChecked(false)}
-		>
-			{checked &&
-			link.some((x) => Math.round(Math.random()) && x.id == game.id) ? (
-				<YtVideo />
-			) : (
-				<SSPreview ss={game.short_screenshots} />
-			)}
+	const change = useRef<HTMLDivElement>(null);
+	const [height, setHeight] = useState(0);
+	const [active, setActive] = useState(false);
 
-			<CardMedia
-				component={"img"}
-				sx={{ aspectRatio: "16/9", width: 1 }}
-				image={imageDecompress(game.background_image)}
-				title={game.name}
-				loading="lazy"
-			/>
-			<CardContent>
-				<Stack direction={"row"} justifyContent={"space-between"}>
-					<Platform platform={game.parent_platforms} />
-					<RatingChip critic={game.metacritic} />
-				</Stack>
-				<Typography
-					gutterBottom
-					variant="h4"
-					sx={{ fontWeight: "bold", pt: 2 }}
-					component="div"
-				>
-					{game.name}
-					<Recommended rating={game.rating_top} />
-				</Typography>
-			</CardContent>
-			<CardActions
+	useEffect(() => {
+		change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
+
+		function handleResize() {
+			change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
+		}
+		window.addEventListener("resize", handleResize);
+		console.log(change.current?.offsetHeight);
+	}, []);
+
+	function doSomething(): ReactNode {
+		if (link.some((x) => Math.round(Math.random()) && x.id == game.id))
+			return <YtVideo />;
+		if (game.short_screenshots.length > 1)
+			return <SSPreview ss={game.short_screenshots.filter((_, i) => i != 0)} />;
+	}
+
+	return (
+		<Box height={height}>
+			<Card
+				ref={change}
 				sx={{
-					p: 2,
-					flexDirection: "column",
+					borderRadius: 10,
+					transformOrigin: "top center",
+					transition: "transform .3s ease",
+					position: "relative",
+					...(active && { zIndex: 3 }),
+					boxShadow: "lg",
+
+					"&:hover .text": {
+						maxHeight: "100vh",
+						transition: "all .1s ease",
+						opacity: 1,
+					},
+					"&:hover": { transform: "scale(1.03)" },
 				}}
+				onMouseEnter={(e) => setActive(true)}
+				onMouseLeave={(e) => setTimeout(() => setActive(false), 200)}
 			>
-				<Stack direction={"row"} width={1}>
-					<ButtonJoy
-						aria-label="Like"
-						startDecorator={<Add sx={{ fontSize: 35 }} />}
-						variant="outlined"
-						color="neutral"
-						sx={{ fontSize: 18 }}
+				{active && doSomething()}
+				<CardMedia
+					component={"img"}
+					sx={{
+						aspectRatio: "16/9",
+						width: 1,
+						// ...(!active && { zIndex: -1 }),
+					}}
+					image={imageDecompress(game.background_image)}
+					title={game.name}
+					loading="lazy"
+				/>
+				<CardContent>
+					<Stack direction={"row"} justifyContent={"space-between"}>
+						<Platform platform={game.parent_platforms} />
+						<RatingChip critic={game.metacritic} />
+					</Stack>
+					<Typography
+						gutterBottom
+						variant="h4"
+						sx={{ fontWeight: "bold", pt: 2 }}
+						component="div"
 					>
-						{game.added}
-					</ButtonJoy>
-					<Checkbox
-						sx={{ color: "red", fontSize: 30 }}
-						icon={<FavoriteBorder />}
-						checkedIcon={<Favorite sx={{ color: "red" }} />}
-					/>
-				</Stack>
-				<Collapse in={checked} sx={{ width: 1, ml: "0 !important" }}>
-					<ListItem>
-						<ListItemText
-							sx={{ display: "flex", justifyContent: "space-between" }}
-							primary="Release date:"
-							secondary={released}
+						{game.name}
+						<Recommended rating={game.rating_top} />
+					</Typography>
+				</CardContent>
+				<Box p={2}>
+					<Stack direction={"row"} width={1}>
+						<ButtonJoy
+							aria-label="Like"
+							startDecorator={<Add sx={{ fontSize: 35 }} />}
+							variant="outlined"
+							color="neutral"
+							sx={{ fontSize: 18 }}
+						>
+							{game.added}
+						</ButtonJoy>
+						<Checkbox
+							sx={{ color: "red", fontSize: 30 }}
+							icon={<FavoriteBorder />}
+							checkedIcon={<Favorite sx={{ color: "red" }} />}
 						/>
-					</ListItem>
-					<Divider variant="middle" />
-					<ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
-						<Typography>Genre:</Typography>
-						<Typography
-							variant="caption"
+					</Stack>
+					<Box
+						sx={{
+							opacity: 0.3,
+							maxHeight: 0,
+							transition: "all .3s ease",
+							overflow: "hidden",
+						}}
+						className="text"
+					>
+						<ListItem>
+							<ListItemText
+								sx={{ display: "flex", justifyContent: "space-between" }}
+								primary="Release date:"
+								secondary={released}
+							/>
+						</ListItem>
+						<Divider variant="middle" />
+						<ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
+							<Typography>Genre:</Typography>
+							<Breadcrumbs>
+								{game.genres.map((d) => (
+									<Link key={d.id} color={"inherit"} href="#">
+										{d.name}
+									</Link>
+								))}
+							</Breadcrumbs>
+						</ListItem>
+						<Divider variant="middle" />
+						<ListItem>
+							<ListItemText
+								sx={{ display: "flex", justifyContent: "space-between" }}
+								primary="Chart:"
+								secondary="#1 Top 2021"
+							/>
+						</ListItem>
+						<Divider variant="middle" />
+
+						<Button
+							fullWidth
+							variant="contained"
+							color="secondary"
+							endIcon={<ChevronRightIcon />}
+							onClick={() =>
+								console.log(
+									game.genres.filter((_, i) => i < 3).map((x) => x.id)
+								)
+							}
 							sx={{
-								"& *::after": { content: `","`, mr: "4px" },
-								"& *:last-child::after": { content: `""`, mr: "4px" },
+								justifyContent: "space-between",
+								textTransform: "none",
+								bgcolor: "grey",
+								"&:hover": {
+									color: "gold",
+								},
 							}}
 						>
-							{game.genres.map((d) => (
-								<Link key={d.id} color={"inherit"} href="#">
-									{d.name}
-								</Link>
-							))}
-						</Typography>
-					</ListItem>
-					<Divider variant="middle" />
-					<ListItem>
-						<ListItemText
-							sx={{ display: "flex", justifyContent: "space-between" }}
-							primary="Chart:"
-							secondary="#1 Top 2021"
-						/>
-					</ListItem>
-					<Divider variant="middle" />
-
-					<Button
-						fullWidth
-						variant="contained"
-						color="secondary"
-						endIcon={<ChevronRightIcon />}
-						sx={{
-							justifyContent: "space-between",
-							textTransform: "none",
-							bgcolor: "grey",
-							"&:hover": {
-								color: "gold",
-								bgcolor: "grey",
-							},
-						}}
-					>
-						See more like this
-					</Button>
-				</Collapse>
-			</CardActions>
-		</Card>
+							See more like this
+						</Button>
+					</Box>
+				</Box>
+			</Card>
+		</Box>
 	);
 }

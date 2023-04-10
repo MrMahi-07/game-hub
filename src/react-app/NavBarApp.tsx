@@ -2,10 +2,14 @@ import Toolbar from "@mui/material/Toolbar";
 import ModeToggler from "./ModeToggler";
 import Input from "@mui/joy/Input";
 import SearchIcon from "@mui/icons-material/Search";
-import { Avatar } from "@mui/material";
+import { Avatar, Drawer, IconButton } from "@mui/material";
 import logo from "../assets/logo.svg";
 import Box from "@mui/joy/Box";
 import { useForm } from "react-hook-form";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useState } from "react";
+import GenreList from "./GenreList";
+import SwipeableDrawer from "./SwipeableDrawer";
 
 interface Props {
 	onSearch: (search: string) => void;
@@ -15,6 +19,7 @@ export default function NavBar({ onSearch }: Props) {
 
 	return (
 		<Toolbar>
+			<SwipeableDrawer />
 			<Avatar
 				alt={logo}
 				src={logo}

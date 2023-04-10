@@ -22,7 +22,7 @@ export default function Sort({ onSelect }: Props) {
 			defaultValue=""
 			indicator={<KeyboardArrowDown />}
 			sx={{
-				mb: 2,
+				height: "fit-content",
 				[`& .${selectClasses.expanded}`]: {
 					transition: "0.2s",
 					[`&.${selectClasses.expanded}`]: {

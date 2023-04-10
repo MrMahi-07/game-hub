@@ -46,7 +46,7 @@ function SSPreview({ ss }: Props) {
 				p={2}
 				direction={"row"}
 				sx={{
-					visibility: getter ? "visible" : "hidden",
+					// visibility: getter ? "visible" : "hidden",
 					position: "absolute",
 					bottom: 0,
 					zIndex: 3,
