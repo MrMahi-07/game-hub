@@ -32,12 +32,6 @@ function useYtTrailer(game: Game[]) {
 		// 		})
 		// 	);
 
-		Promise.all(end)
-			.then((data) => {
-				console.log(data);
-			})
-			.catch((err) => console.log(err.messa));
-
 		// ytApi
 		// axios
 		// 	.get("/search", {

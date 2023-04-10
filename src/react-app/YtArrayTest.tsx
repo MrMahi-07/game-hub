@@ -25,7 +25,6 @@ const YtArrayTest = () => {
 			}
 		});
 	});
-	console.log(ytData);
 
 	return <div>YtArrayTest</div>;
 };

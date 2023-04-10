@@ -10,7 +10,6 @@ import NavBar from "./react-app/NavBarApp";
 import PlatformFilter from "./react-app/PlatformFilter";
 import Sort from "./react-app/Sort";
 import { Stack } from "@mui/joy";
-import Test from "./react-app/Test";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
@@ -40,7 +39,7 @@ export default function App() {
 						onSelect={(id) => setGameQuery({ ...gameQuery, genre: id })}
 					/>
 				</Grid>
-				<Grid xs={12} sm={12} md container mt={3} gap={1} overflow={"hidden"}>
+				<Grid xs={12} sm={12} md container mt={3} gap={1}>
 					<Grid xs={12}>
 						<Stack direction={"row"} spacing={2}>
 							<PlatformFilter
@@ -54,7 +53,6 @@ export default function App() {
 						</Stack>
 					</Grid>
 					<Main gameQuery={gameQuery} />
-					{/* <Test /> */}
 				</Grid>
 			</Grid>
 		</CssVarsProvider>

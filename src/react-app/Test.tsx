@@ -16,7 +16,6 @@ const card = (i: number, v: number) => {
 			change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
 		}
 		window.addEventListener("resize", handleResize);
-		console.log(change.current?.offsetHeight);
 	}, []);
 
 	return (

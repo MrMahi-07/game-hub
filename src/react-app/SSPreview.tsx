@@ -17,14 +17,13 @@ function SSPreview({ ss }: Props) {
 			let val = Math.abs((e.clientX - b.x) / b.width) % 1;
 
 			setGetter(val);
-			val < 0 && console.log(val, b.x);
 		}
 	};
 
 	let imageIndex = Math.floor(getter * ss.length);
 
 	return (
-		<Box position={"absolute"}>
+		<Box position={"absolute"} width={1}>
 			<Box
 				onMouseMove={handleEvent}
 				onMouseLeave={() => setGetter(0)}
@@ -46,7 +45,6 @@ function SSPreview({ ss }: Props) {
 				p={2}
 				direction={"row"}
 				sx={{
-					// visibility: getter ? "visible" : "hidden",
 					position: "absolute",
 					bottom: 0,
 					zIndex: 3,
