@@ -73,17 +73,16 @@ export default function ExpandableSlider({ game }: Props) {
 				sx={{
 					borderRadius: 10,
 					transformOrigin: "top center",
-					transition: "transform .3s ease",
+					transition: "transform .1s ease",
 					position: "relative",
-					...(active && { zIndex: 3 }),
 					boxShadow: "lg",
 
 					"&:hover .text": {
 						maxHeight: "100vh",
-						transition: "all .1s ease",
+						transition: "all .05s ease",
 						opacity: 1,
 					},
-					"&:hover": { transform: "scale(1.03)" },
+					"&:hover": { transform: "scale(1.03)", zIndex: 1 },
 				}}
 				onMouseEnter={(e) => setActive(true)}
 				onMouseLeave={(e) => setTimeout(() => setActive(false), 200)}
@@ -94,13 +93,12 @@ export default function ExpandableSlider({ game }: Props) {
 					sx={{
 						aspectRatio: "16/9",
 						width: 1,
-						// ...(!active && { zIndex: -1 }),
 					}}
 					image={imageDecompress(game.background_image)}
 					title={game.name}
 					loading="lazy"
 				/>
-				<CardContent>
+				<CardContent sx={{ zIndex: 5 }}>
 					<Stack direction={"row"} justifyContent={"space-between"}>
 						<Platform platform={game.parent_platforms} />
 						<RatingChip critic={game.metacritic} />
