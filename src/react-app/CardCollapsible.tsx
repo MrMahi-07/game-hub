@@ -16,9 +16,10 @@ import { Game } from "../hooks/useGames";
 interface Props {
 	game: Game;
 	isActive: boolean;
+	onSelected: (id: number[]) => void;
 }
 
-const CardCollapsible = ({ game, isActive }: Props) => {
+const CardCollapsible = ({ game, isActive, onSelected }: Props) => {
 	let LocaleConfig: Intl.DateTimeFormatOptions = { dateStyle: "medium" };
 	let released = new Date(game.released).toLocaleDateString(
 		"en-US",
@@ -46,11 +47,19 @@ const CardCollapsible = ({ game, isActive }: Props) => {
 			<ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
 				<Typography>Genre:</Typography>
 				<Breadcrumbs>
-					{game.genres.map((d) => (
-						<Link key={d.id} color={"inherit"} href="#">
-							{d.name}
-						</Link>
-					))}
+					{game.genres
+						.filter((_, i) => i < 2)
+						.map((d) => (
+							<Link
+								component={Button}
+								key={d.id}
+								onClick={() => onSelected([d.id])}
+								color={"inherit"}
+								href="#"
+							>
+								{d.name}
+							</Link>
+						))}
 				</Breadcrumbs>
 			</ListItem>
 			<Divider variant="middle" />
@@ -76,6 +85,9 @@ const CardCollapsible = ({ game, isActive }: Props) => {
 						color: "gold",
 					},
 				}}
+				onClick={() =>
+					onSelected(game.genres.filter((_, i) => i < 2).map((x) => x.id))
+				}
 			>
 				See more like this
 			</Button>

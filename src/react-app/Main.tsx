@@ -4,13 +4,13 @@ import SkeletonCard from "./SkeletonCard";
 import Typography from "@mui/material/Typography";
 import useGames from "../hooks/useGames";
 import { GameQuery } from "../hooks/useGames";
-import { useState } from "react";
 
 interface Props {
 	gameQuery: GameQuery;
+	onSelected: (id: number[]) => void;
 }
 
-const Main = ({ gameQuery }: Props) => {
+const Main = ({ gameQuery, onSelected }: Props) => {
 	const { error, isLoading, data } = useGames(gameQuery);
 
 	if (error)
@@ -40,9 +40,13 @@ const Main = ({ gameQuery }: Props) => {
 									key={i}
 								></SkeletonCard>
 							))
-					: data
-							// .filter((_, i) => i <= 15)
-							.map((d) => <GameCard key={d.id} {...d} />)}
+					: data.map((d) => (
+							<GameCard
+								key={d.id}
+								game={d}
+								onSelected={(id) => onSelected(id)}
+							/>
+					  ))}
 			</Masonry>
 		</>
 	);

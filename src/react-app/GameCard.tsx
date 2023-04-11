@@ -23,7 +23,12 @@ import link from "../data/game-trailer.json";
 import SSPreview from "./SSPreview";
 import CardCollapsible from "./CardCollapsible";
 
-export default function GameCard(game: Game) {
+interface Props {
+	game: Game;
+	onSelected: (id: number[]) => void;
+}
+
+export default function GameCard({ game, onSelected }: Props) {
 	const change = useRef<HTMLDivElement>(null);
 	const [height, setHeight] = useState(0);
 	const [active, setActive] = useState(false);
@@ -49,7 +54,13 @@ export default function GameCard(game: Game) {
 		const theme = useTheme();
 		const matches = useMediaQuery(theme.breakpoints.up("md"));
 
-		const abc = <CardCollapsible game={game} isActive={active} />;
+		const abc = (
+			<CardCollapsible
+				game={game}
+				isActive={active}
+				onSelected={(id) => onSelected(id)}
+			/>
+		);
 		return matches ? (
 			abc
 		) : (

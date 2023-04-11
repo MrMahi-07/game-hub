@@ -13,6 +13,7 @@ import { Stack } from "@mui/joy";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+
 	return (
 		<CssVarsProvider theme={deepMergeMui}>
 			<CssBaseline />
@@ -30,13 +31,16 @@ export default function App() {
 						onSearch={(search) =>
 							setGameQuery({ ...gameQuery, search: search })
 						}
+						onClick={(id) => setGameQuery({ ...gameQuery, genre: id + "" })}
 					/>
 				</Grid>
 				<Grid
 					sx={{ width: 220, display: { sm: "none", xs: "none", md: "inline" } }}
 				>
 					<GenreList
-						onSelect={(id) => setGameQuery({ ...gameQuery, genre: id })}
+						onSelect={(id) => {
+							setGameQuery({ ...gameQuery, genre: id + "" });
+						}}
 					/>
 				</Grid>
 				<Grid xs={12} sm={12} md container mt={3} gap={1}>
@@ -52,7 +56,12 @@ export default function App() {
 							/>
 						</Stack>
 					</Grid>
-					<Main gameQuery={gameQuery} />
+					<Main
+						gameQuery={gameQuery}
+						onSelected={(id) =>
+							setGameQuery({ ...gameQuery, genre: id.join() })
+						}
+					/>
 				</Grid>
 			</Grid>
 		</CssVarsProvider>

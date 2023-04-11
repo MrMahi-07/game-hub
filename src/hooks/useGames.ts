@@ -19,7 +19,8 @@ export interface Game {
 }
 
 export interface GameQuery {
-	genre: number | null;
+	// genre: number[] | null;
+	genre: string;
 	platform: number | null;
 	sort: string;
 	search: string;
@@ -38,5 +39,4 @@ const useGames = (gameQuery: GameQuery) =>
 		},
 		[gameQuery]
 	);
-
 export default useGames;
