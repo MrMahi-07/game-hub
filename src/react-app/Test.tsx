@@ -1,77 +1,93 @@
-import { Masonry } from "@mui/lab";
-import { Card, CardContent, Slide, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-import { log } from "console";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import {
+	Box,
+	Card,
+	CardContent,
+	CardMedia,
+	Divider,
+	Grid,
+	Stack,
+	Typography,
+} from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { render } from "react-dom";
+import { Controller } from "react-hook-form";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const card = (i: number, v: number) => {
-	const change = useRef<HTMLDivElement>(null);
-	const [height, setHeight] = useState(0);
-	const [active, setActive] = useState(false);
+interface Data {
+	id: number;
+	title: string;
+	overview: string;
+	backdrop_path: string;
+}
 
-	useEffect(() => {
-		change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
-
-		function handleResize() {
-			change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
-		}
-		window.addEventListener("resize", handleResize);
-	}, []);
-
-	return (
-		<Box key={i} height={height}>
-			<Card
-				ref={change}
-				sx={{
-					position: "relative",
-					transition: "transform .3s ease",
-					...(active && { zIndex: 2 }),
-					boxShadow: "lg",
-
-					"&:hover .text": {
-						maxHeight: "100vh",
-						transition: "all .5s ease",
-						transitionDelay: ".2s",
-						opacity: 1,
-					},
-					"&:hover": { transform: "scale(1.01)" },
-				}}
-				onMouseLeave={() => setTimeout(() => setActive(false), 300)}
-				onMouseEnter={() => setActive(true)}
-			>
-				<CardContent>
-					<Box sx={{ aspectRatio: "16/9", bgcolor: "steelblue", width: 1 }} />
-					<Typography variant="body1">
-						{v}Lorem ipsum dolor sit amet consectetur adipisicing elit. Id,
-						eligendi
-					</Typography>
-
-					<Typography
-						sx={{
-							maxHeight: 0,
-							opacity: 0.3,
-							transition: "all .3s ease",
-							overflow: "hidden",
-						}}
-						className="text"
-					>
-						Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur
-						adipisicing elit. Dicta maxime consectetur ipsam ipsa vero aperiam
-						mollitia facere id qui sapiente corporis quasi voluptatibus,
-						laudantium ad in, rem amet omnis porro?
-					</Typography>
-				</CardContent>
-			</Card>
-		</Box>
-	);
-};
+interface Response {
+	results: Data[];
+}
 
 const Test = () => {
-	const size = [200, 100, 150, 90, 90];
+	const [state, setState] = useState<Data[]>([]);
+	const [page, setPage] = useState(1);
+
+	const limit = 150;
+
+	useEffect(() => {
+		fetchMoreData();
+	}, []);
+
+	const fetchMoreData = () => {
+		const API_URL = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=${page}`;
+
+		const controller = new AbortController();
+		axios
+			.get<Response>(API_URL, { signal: controller.signal })
+			.then((res) => {
+				setState([...state, ...res.data.results]);
+				setPage((p) => p + 1);
+				console.log(state);
+			})
+			.catch((e) => {
+				console.log(e.message);
+			});
+
+		return () => controller.abort();
+	};
+
 	return (
-		<Masonry columns={2} sx={{ zIndex: -2 }} spacing={2}>
-			{size.map((v, i) => card(i, v))}
-		</Masonry>
+		<>
+			<Typography width={1} component={"h2"}>
+				This is Movie Database
+			</Typography>
+			<Divider />
+			<InfiniteScroll
+				dataLength={state.length}
+				next={fetchMoreData}
+				hasMore={state.length < 100}
+				loader={<h4>Loading...</h4>}
+				endMessage={<h4>Thankyou...</h4>}
+			>
+				<Grid container spacing={2}>
+					{state.map((i, index) => (
+						<Grid item key={index} sm={12} md={6} lg={4}>
+							<Card sx={{ maxHeight: 350 }}>
+								<CardMedia
+									src={"https://image.tmdb.org/t/p/w500/" + i.backdrop_path}
+									loading="lazy"
+									component={"img"}
+									width={1}
+									title={i.title}
+									sx={{ aspectRatio: "16/9" }}
+								/>
+								<CardContent>
+									<Typography component={"h1"}>{i.title}</Typography>
+									<Typography>{i.overview}</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+					))}
+				</Grid>
+			</InfiniteScroll>
+		</>
 	);
 };
 
