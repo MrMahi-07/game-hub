@@ -57,13 +57,14 @@ export default function App() {
 							/>
 						</Stack>
 					</Grid>
-					{/* <Main
+					<Main
 						gameQuery={gameQuery}
 						onSelected={(id) =>
 							setGameQuery({ ...gameQuery, genre: id.join() })
 						}
-					/> */}
-					<Test />
+						onNextPage={(page) => setGameQuery({ ...gameQuery, page })}
+					/>
+					{/* <Test /> */}
 				</Grid>
 			</Grid>
 		</CssVarsProvider>

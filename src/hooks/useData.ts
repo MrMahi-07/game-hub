@@ -5,6 +5,7 @@ import create from "../services/rawg-http";
 export interface FetchResponse<T> {
 	count: number;
 	results: T[];
+	next: string;
 }
 
 export const useData = <T>(
@@ -14,6 +15,7 @@ export const useData = <T>(
 ) => {
 	const [data, setData] = useState<T[]>([]);
 	const [error, setError] = useState("");
+	const [nextPage, setNextPage] = useState("");
 	const [isLoading, setLoading] = useState(false);
 
 	useEffect(
@@ -27,6 +29,7 @@ export const useData = <T>(
 					{
 						setLoading(false);
 						setData(data.results);
+						setNextPage(data.next);
 					}
 				})
 				.catch((err) => {
@@ -39,5 +42,5 @@ export const useData = <T>(
 		},
 		deps ? [...deps] : []
 	);
-	return { data, error, isLoading };
+	return { data, error, isLoading, nextPage };
 };
