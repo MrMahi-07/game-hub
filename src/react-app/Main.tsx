@@ -11,12 +11,16 @@ import { Box } from "@mui/material";
 
 interface Props {
 	gameQuery: GameQuery;
+	pageRequest?: boolean;
 	onSelected: (id: number[]) => void;
 	onPageEnd: (page: number) => void;
 }
 
-const Main = ({ gameQuery, onSelected, onPageEnd }: Props) => {
-	const { error, isLoading, gameData, nextPage } = useGames(gameQuery);
+const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
+	const { error, isLoading, gameData, nextPage } = useGames(
+		gameQuery,
+		pageRequest
+	);
 	const [page, setPage] = useState(1);
 
 	if (error)
@@ -31,8 +35,6 @@ const Main = ({ gameQuery, onSelected, onPageEnd }: Props) => {
 
 	// 	return () => setState([]);
 	// }, [gameQuery]);
-
-	const [state, setState] = useState<Game[]>([]);
 
 	const limit = 60;
 
@@ -58,7 +60,10 @@ const Main = ({ gameQuery, onSelected, onPageEnd }: Props) => {
 						mx: "auto",
 					}}
 				>
-					{isLoading
+					{gameData.map((d, i) => (
+						<GameCard key={i} game={d} onSelected={(id) => onSelected(id)} />
+					))}
+					{/* {!pageRequest && isLoading
 						? Array(20)
 								.fill(0)
 								.map((v, i) => (
@@ -74,7 +79,7 @@ const Main = ({ gameQuery, onSelected, onPageEnd }: Props) => {
 									game={d}
 									onSelected={(id) => onSelected(id)}
 								/>
-						  ))}
+						  ))} */}
 				</Masonry>
 			</InfiniteScroll>
 		</Box>

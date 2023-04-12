@@ -14,6 +14,7 @@ import Test from "./react-app/Test";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+	const [pageRequest, setPageRequest] = useState(false);
 
 	return (
 		<CssVarsProvider theme={deepMergeMui}>
@@ -32,7 +33,10 @@ export default function App() {
 						onSearch={(search) =>
 							setGameQuery({ ...gameQuery, search: search })
 						}
-						onClick={(id) => setGameQuery({ ...gameQuery, genre: id + "" })}
+						onClick={(id) => {
+							setGameQuery({ ...gameQuery, genre: id + "" });
+							setPageRequest(false);
+						}}
 					/>
 				</Grid>
 				<Grid
@@ -40,7 +44,10 @@ export default function App() {
 				>
 					<GenreList
 						onSelect={(id) => {
-							setGameQuery({ ...gameQuery, genre: id + "" });
+							{
+								setGameQuery({ ...gameQuery, genre: id + "" });
+								setPageRequest(false);
+							}
 						}}
 					/>
 				</Grid>
@@ -59,10 +66,14 @@ export default function App() {
 					</Grid>
 					<Main
 						gameQuery={gameQuery}
+						pageRequest={pageRequest}
 						onSelected={(id) =>
 							setGameQuery({ ...gameQuery, genre: id.join() })
 						}
-						onNextPage={(page) => setGameQuery({ ...gameQuery, page })}
+						onPageEnd={(page) => {
+							setGameQuery({ ...gameQuery, page: page });
+							setPageRequest(true);
+						}}
 					/>
 					{/* <Test /> */}
 				</Grid>

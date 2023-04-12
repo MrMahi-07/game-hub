@@ -81,7 +81,9 @@ export default function GameCard({ game, onSelected }: Props) {
 	}
 
 	return (
-		<Box height={height}>
+		<Box
+		// height={height}
+		>
 			<Card
 				ref={change}
 				sx={{
@@ -91,7 +93,7 @@ export default function GameCard({ game, onSelected }: Props) {
 					position: "relative",
 					boxShadow: "lg",
 
-					"&:hover": { transform: "scale(1.03)", zIndex: 1 },
+					// "&:hover": { transform: "scale(1.03)", zIndex: 1 },
 				}}
 				onMouseEnter={(e) => setTimeout(() => setActive(true), 100)}
 				onMouseLeave={(e) => setTimeout(() => setActive(false), 100)}

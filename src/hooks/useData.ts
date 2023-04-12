@@ -11,9 +11,10 @@ export interface FetchResponse<T> {
 export const useData = <T>(
 	endpoint: string,
 	requestConfig?: AxiosRequestConfig,
-	deps?: any[]
+	deps?: any[],
+	pageRequest?: boolean
 ) => {
-	const [data, setData] = useState<T[]>([]);
+	const [gameData, setGameData] = useState<T[]>([]);
 	const [error, setError] = useState("");
 	const [nextPage, setNextPage] = useState("");
 	const [isLoading, setLoading] = useState(false);
@@ -28,8 +29,12 @@ export const useData = <T>(
 				.then(({ data }) => {
 					{
 						setLoading(false);
-						setData(data.results);
+
+						setGameData(
+							pageRequest ? [...gameData, ...data.results] : data.results
+						);
 						setNextPage(data.next);
+						console.log(gameData);
 					}
 				})
 				.catch((err) => {
@@ -42,5 +47,5 @@ export const useData = <T>(
 		},
 		deps ? [...deps] : []
 	);
-	return { data, error, isLoading, nextPage };
+	return { error, isLoading, nextPage, gameData };
 };

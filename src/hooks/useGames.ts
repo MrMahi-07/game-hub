@@ -27,7 +27,7 @@ export interface GameQuery {
 	page: number | null;
 }
 
-const useGames = (gameQuery: GameQuery) =>
+const useGames = (gameQuery: GameQuery, pageRequest?: boolean) =>
 	useData<Game>(
 		"/games",
 		{
@@ -39,6 +39,7 @@ const useGames = (gameQuery: GameQuery) =>
 				page: gameQuery.page,
 			},
 		},
-		[gameQuery]
+		[gameQuery],
+		pageRequest
 	);
 export default useGames;
