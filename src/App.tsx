@@ -2,7 +2,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import deepMergeMui from "./react-app/deepMergeMui";
 import { GameQuery } from "./hooks/useGames";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import GenreList from "./react-app/GenreList";
 import Grid from "@mui/joy/Grid";
 import Main from "./react-app/Main";
@@ -10,11 +10,20 @@ import NavBar from "./react-app/NavBarApp";
 import PlatformFilter from "./react-app/PlatformFilter";
 import Sort from "./react-app/Sort";
 import { Stack } from "@mui/joy";
-import Test from "./react-app/Test";
 
 export default function App() {
 	const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 	const [pageRequest, setPageRequest] = useState(false);
+	const [page, setPage] = useState(1);
+
+	useEffect(() => {
+		window.history.scrollRestoration = "manual";
+	}, []);
+
+	useEffect(() => {
+		console.log(page);
+		setPage(1);
+	}, [gameQuery]);
 
 	return (
 		<CssVarsProvider theme={deepMergeMui}>
@@ -70,8 +79,9 @@ export default function App() {
 						onSelected={(id) =>
 							setGameQuery({ ...gameQuery, genre: id.join() })
 						}
-						onPageEnd={(page) => {
+						onPageEnd={(p) => {
 							setGameQuery({ ...gameQuery, page: page });
+							setPage(p);
 							setPageRequest(true);
 						}}
 					/>

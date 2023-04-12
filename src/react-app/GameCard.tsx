@@ -33,15 +33,6 @@ export default function GameCard({ game, onSelected }: Props) {
 	const [height, setHeight] = useState(0);
 	const [active, setActive] = useState(false);
 
-	useEffect(() => {
-		change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
-
-		function handleResize() {
-			change.current?.offsetHeight && setHeight(change.current?.offsetHeight);
-		}
-		window.addEventListener("resize", handleResize);
-	}, []);
-
 	function doSomething(): ReactNode {
 		if (link.some((x) => Math.round(Math.random()) && x.id == game.id))
 			return <YtVideo />;
@@ -55,11 +46,7 @@ export default function GameCard({ game, onSelected }: Props) {
 		const matches = useMediaQuery(theme.breakpoints.up("md"));
 
 		const abc = (
-			<CardCollapsible
-				game={game}
-				isActive={active}
-				onSelected={(id) => onSelected(id)}
-			/>
+			<CardCollapsible game={game} onSelected={(id) => onSelected(id)} />
 		);
 		return matches ? (
 			abc
@@ -82,18 +69,23 @@ export default function GameCard({ game, onSelected }: Props) {
 
 	return (
 		<Box
-		// height={height}
+			// height={height}
+
+			sx={{
+				position: "relative",
+				transformOrigin: "top center",
+				transition: "transform .3s ease-in",
+				"&:hover": { transform: "scale(1.03)", zIndex: 5 },
+				"&:hover .content": { maxHeight: "100vh" },
+				// ...(active && { transform: "scale(1.03)", zIndex: 5 }),
+			}}
 		>
 			<Card
 				ref={change}
 				sx={{
 					borderRadius: 10,
-					transformOrigin: "top center",
-					transition: "transform .3s ease-in",
 					position: "relative",
 					boxShadow: "lg",
-
-					// "&:hover": { transform: "scale(1.03)", zIndex: 1 },
 				}}
 				onMouseEnter={(e) => setTimeout(() => setActive(true), 100)}
 				onMouseLeave={(e) => setTimeout(() => setActive(false), 100)}
@@ -109,7 +101,7 @@ export default function GameCard({ game, onSelected }: Props) {
 					title={game.name}
 					loading="lazy"
 				/>
-				<CardContent sx={{ zIndex: 5 }}>
+				<CardContent>
 					<Stack direction={"row"} justifyContent={"space-between"}>
 						<Platform platform={game.parent_platforms} />
 						<RatingChip critic={game.metacritic} />
@@ -141,9 +133,23 @@ export default function GameCard({ game, onSelected }: Props) {
 							checkedIcon={<Favorite sx={{ color: "red" }} />}
 						/>
 					</Stack>
-					{MyComponent()}
 				</Box>
 			</Card>
+			<Box sx={{ height: 0, zIndex: 1, position: "relative" }}>
+				<Card
+					sx={{
+						position: "absolute",
+						width: 1,
+						maxHeight: 0,
+						boxShadow: "lg",
+						borderRadius: "0 0 10px 10px",
+						top: -10,
+					}}
+					className={"content"}
+				>
+					{MyComponent()}
+				</Card>
+			</Box>
 		</Box>
 	);
 }

@@ -17,10 +17,7 @@ interface Props {
 }
 
 const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
-	const { error, isLoading, gameData, nextPage } = useGames(
-		gameQuery,
-		pageRequest
-	);
+	const { error, isLoading, gameData } = useGames(gameQuery, pageRequest);
 	const [page, setPage] = useState(1);
 
 	if (error)
@@ -29,12 +26,6 @@ const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
 				{error}
 			</Typography>
 		);
-
-	// useEffect(() => {
-	// 	setState([...data]);
-
-	// 	return () => setState([]);
-	// }, [gameQuery]);
 
 	const limit = 60;
 
@@ -50,7 +41,7 @@ const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
 				next={HandleFetch}
 				hasMore={gameData.length < limit}
 				loader={<h4>Loading...</h4>}
-				endMessage={<h4>Thankyou...</h4>}
+				endMessage={<h4 style={{ height: "200px" }}>Thankyou...</h4>}
 			>
 				<Masonry
 					columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4 }}
@@ -60,10 +51,10 @@ const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
 						mx: "auto",
 					}}
 				>
-					{gameData.map((d, i) => (
+					{/* {gameData.map((d, i) => (
 						<GameCard key={i} game={d} onSelected={(id) => onSelected(id)} />
-					))}
-					{/* {!pageRequest && isLoading
+					))} */}
+					{!pageRequest && isLoading
 						? Array(20)
 								.fill(0)
 								.map((v, i) => (
@@ -79,7 +70,7 @@ const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
 									game={d}
 									onSelected={(id) => onSelected(id)}
 								/>
-						  ))} */}
+						  ))}
 				</Masonry>
 			</InfiniteScroll>
 		</Box>

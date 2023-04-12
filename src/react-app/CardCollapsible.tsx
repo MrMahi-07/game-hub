@@ -15,11 +15,10 @@ import { Game } from "../hooks/useGames";
 
 interface Props {
 	game: Game;
-	isActive: boolean;
 	onSelected: (id: number[]) => void;
 }
 
-const CardCollapsible = ({ game, isActive, onSelected }: Props) => {
+const CardCollapsible = ({ game, onSelected }: Props) => {
 	let LocaleConfig: Intl.DateTimeFormatOptions = { dateStyle: "medium" };
 	let released = new Date(game.released).toLocaleDateString(
 		"en-US",
@@ -29,10 +28,8 @@ const CardCollapsible = ({ game, isActive, onSelected }: Props) => {
 	return (
 		<Box
 			sx={{
-				pt: 2,
-				display: "none",
+				p: 2,
 				transition: "all .05s",
-				...(isActive && { display: "block" }),
 			}}
 			className="cardCollapsible"
 		>

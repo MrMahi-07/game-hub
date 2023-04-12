@@ -34,7 +34,6 @@ export const useData = <T>(
 							pageRequest ? [...gameData, ...data.results] : data.results
 						);
 						setNextPage(data.next);
-						console.log(gameData);
 					}
 				})
 				.catch((err) => {
