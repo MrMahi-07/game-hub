@@ -41,7 +41,9 @@ const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
 				next={HandleFetch}
 				hasMore={gameData.length < limit}
 				loader={<h4>Loading...</h4>}
-				endMessage={<h4 style={{ height: "200px" }}>Thankyou...</h4>}
+				endMessage={
+					<Typography style={{ height: "200px" }}>Thankyou...</Typography>
+				}
 			>
 				<Masonry
 					columns={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 4 }}
