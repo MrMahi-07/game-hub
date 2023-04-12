@@ -12,11 +12,11 @@ import { Box } from "@mui/material";
 interface Props {
 	gameQuery: GameQuery;
 	onSelected: (id: number[]) => void;
-	onNextPage: (page: number) => void;
+	onPageEnd: (page: number) => void;
 }
 
-const Main = ({ gameQuery, onSelected, onNextPage }: Props) => {
-	const { error, isLoading, data, nextPage } = useGames(gameQuery);
+const Main = ({ gameQuery, onSelected, onPageEnd }: Props) => {
+	const { error, isLoading, gameData, nextPage } = useGames(gameQuery);
 	const [page, setPage] = useState(1);
 
 	if (error)
@@ -26,25 +26,27 @@ const Main = ({ gameQuery, onSelected, onNextPage }: Props) => {
 			</Typography>
 		);
 
+	// useEffect(() => {
+	// 	setState([...data]);
+
+	// 	return () => setState([]);
+	// }, [gameQuery]);
+
 	const [state, setState] = useState<Game[]>([]);
 
 	const limit = 60;
 
 	const HandleFetch = () => {
-		// setTimeout(() => {
-		setState([...state, ...data]);
-		console.log(state, state.length);
-		setPage((v) => v + 1);
-		onNextPage(page + 1);
-		// }, 1500);
+		setPage(page + 1);
+		onPageEnd(page + 1);
 	};
 
 	return (
 		<Box width={1}>
 			<InfiniteScroll
-				dataLength={state.length}
+				dataLength={gameData.length}
 				next={HandleFetch}
-				hasMore={state.length < limit}
+				hasMore={gameData.length < limit}
 				loader={<h4>Loading...</h4>}
 				endMessage={<h4>Thankyou...</h4>}
 			>
@@ -66,7 +68,7 @@ const Main = ({ gameQuery, onSelected, onNextPage }: Props) => {
 										key={i}
 									></SkeletonCard>
 								))
-						: (state.length == 0 ? data : state).map((d, i) => (
+						: gameData.map((d, i) => (
 								<GameCard
 									key={i}
 									game={d}
