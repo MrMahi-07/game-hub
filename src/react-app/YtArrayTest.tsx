@@ -9,13 +9,12 @@ const YtArrayTest = () => {
 		let items = x.data.items;
 		let len = " video game trailer";
 		let search = params.q.substring(0, params.q.length - len.length);
-
 		gameData.forEach((g) => {
-			if (g.name === search) {
+			if (g[0].name === search) {
 				ytData.push({
-					id: g.id,
-					name: g.name,
-					slug: g.slug,
+					id: g[0].id,
+					name: g[0].name,
+					slug: g[0].slug,
 					title: items[0].snippet.title,
 					description: items[0].snippet.description,
 					videoId: items[0].id.videoId,

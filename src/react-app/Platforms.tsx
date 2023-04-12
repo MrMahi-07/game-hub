@@ -9,7 +9,7 @@ import {
 import { MdPhoneIphone } from "react-icons/md";
 import { AiFillAndroid } from "react-icons/ai";
 import { Stack } from "@mui/material";
-import { Platform } from "../hooks/useGames";
+import { Platform } from "../hooks/usePlatform";
 
 interface Props {
 	platform: { platform: Platform }[];

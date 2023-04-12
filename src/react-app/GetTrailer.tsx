@@ -9,14 +9,14 @@ interface Props {
 }
 
 const GetTrailer = ({ gameId }: Props) => {
-	const { data } = useTrailer(gameId);
-	if (!data[0])
+	const { gameData } = useTrailer(gameId);
+	if (!gameData[0])
 		return (
 			<Typography variant="outlined" color="success">
 				imagination
 			</Typography>
 		);
-	let link = data[0].data[480];
+	let link = gameData[0].data[480];
 
 	return (
 		<Link
