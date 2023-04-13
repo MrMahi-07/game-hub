@@ -2,12 +2,11 @@ import Masonry from "@mui/lab/Masonry";
 import GameCard from "./GameCard";
 import SkeletonCard from "./SkeletonCard";
 import Typography from "@mui/material/Typography";
-import useGames, { Game } from "../hooks/useGames";
+import useGames from "../hooks/useGames";
 import { GameQuery } from "../hooks/useGames";
 import InfiniteScroll from "react-infinite-scroll-component";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { useState } from "react";
+import { Box, CircularProgress } from "@mui/material";
 
 interface Props {
 	gameQuery: GameQuery;
@@ -40,7 +39,11 @@ const Main = ({ gameQuery, onSelected, onPageEnd, pageRequest }: Props) => {
 				dataLength={gameData.length}
 				next={HandleFetch}
 				hasMore={gameData.length < limit}
-				loader={<h4>Loading...</h4>}
+				loader={
+					<Box height={100}>
+						<CircularProgress />
+					</Box>
+				}
 				endMessage={
 					<Typography style={{ height: "200px" }}>Thankyou...</Typography>
 				}

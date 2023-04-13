@@ -16,16 +16,15 @@ export default function NavBar({ onSearch, onClick }: Props) {
 	const { register, handleSubmit } = useForm();
 
 	return (
-		<Toolbar sx={{ gap: 2 }}>
+		<Toolbar sx={{ gap: 2, px: 0 }}>
 			<SwipeableDrawer onClick={(id) => onClick(id)} />
-			<Box component={"img"} alt={logo} src={logo} width={100} />
+			<Box component={"img"} alt={logo} src={logo} width={60} />
 
 			<Box width={1} minWidth={50}>
 				<form onSubmit={handleSubmit((data) => onSearch(data.search))}>
 					<Input
 						{...register("search", { required: true })}
 						sx={{
-							mx: 1,
 							"--Input-minHeight": "55px",
 							"--Input-radius": "50px",
 						}}

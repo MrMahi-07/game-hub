@@ -27,7 +27,7 @@ const SwipeableDrawer = ({ onClick }: Props) => {
 				onClick={handleDrawerOpen}
 				sx={{ display: { sm: "block", md: "none" } }}
 			>
-				<MenuIcon />
+				<MenuIcon sx={{ fontSize: 40 }} />
 			</IconButton>
 			<Drawer anchor="left" open={open} onClose={handleDrawerClose}>
 				<GenreList onSelect={handleDrawerClose} />

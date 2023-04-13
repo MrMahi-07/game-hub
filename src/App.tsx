@@ -20,11 +20,6 @@ export default function App() {
 		window.history.scrollRestoration = "manual";
 	}, []);
 
-	useEffect(() => {
-		console.log(page);
-		setPage(1);
-	}, [gameQuery]);
-
 	return (
 		<CssVarsProvider theme={deepMergeMui}>
 			<CssBaseline />
@@ -39,12 +34,15 @@ export default function App() {
 			>
 				<Grid xs={12}>
 					<NavBar
-						onSearch={(search) =>
-							setGameQuery({ ...gameQuery, search: search })
-						}
+						onSearch={(search) => {
+							setGameQuery({ ...gameQuery, search: search });
+							setPage(1);
+							setPageRequest(false);
+						}}
 						onClick={(id) => {
 							setGameQuery({ ...gameQuery, genre: id + "" });
 							setPageRequest(false);
+							setPage(1);
 						}}
 					/>
 				</Grid>
@@ -56,6 +54,7 @@ export default function App() {
 							{
 								setGameQuery({ ...gameQuery, genre: id + "" });
 								setPageRequest(false);
+								setPage(1);
 							}
 						}}
 					/>
@@ -64,11 +63,17 @@ export default function App() {
 					<Grid xs={12}>
 						<Stack direction={"row"} spacing={2}>
 							<PlatformFilter
-								onSelect={(id) => setGameQuery({ ...gameQuery, platform: id })}
+								onSelect={(id) => {
+									setGameQuery({ ...gameQuery, platform: id });
+									setPageRequest(false);
+									setPage(1);
+								}}
 							/>
 							<Sort
 								onSelect={(sort) => {
 									setGameQuery({ ...gameQuery, sort });
+									setPage(1);
+									setPageRequest(false);
 								}}
 							/>
 						</Stack>
@@ -76,9 +81,11 @@ export default function App() {
 					<Main
 						gameQuery={gameQuery}
 						pageRequest={pageRequest}
-						onSelected={(id) =>
-							setGameQuery({ ...gameQuery, genre: id.join() })
-						}
+						onSelected={(id) => {
+							setGameQuery({ ...gameQuery, genre: id.join() });
+							setPage(1);
+							setPageRequest(false);
+						}}
 						onPageEnd={(p) => {
 							setGameQuery({ ...gameQuery, page: page });
 							setPage(p);

@@ -29,6 +29,8 @@ export default function Sort({ onSelect }: Props) {
 						transform: "rotate(-180deg)",
 					},
 				},
+				mb: 2,
+				minWidth: 180,
 			}}
 		>
 			<Option
